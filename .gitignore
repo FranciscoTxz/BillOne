@@ -1,3 +1,28 @@
 .DS_Store
 /BillOneAPI/obj
 /BillOneAPI/bin
+
+# Node modules
+node_modules/
+
+# Environment files
+src/environments/*.ts
+
+# Build output
+dist/
+out-tsc/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Angular specific
+.angular/cache/
+.angular/config.json
+
+# IDEs
+.vscode/
+.idea/
