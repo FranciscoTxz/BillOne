@@ -1,12 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using BillOneAPI.Models.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-/* builder.Services.AddDbContext<MovieContext>(options =>
-                    options.UseSqlServer(builder.Configuration.GetConnectionString("MovieContext"))); */
+
+// MAC DB
+builder.Services.AddDbContext<BillOneContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("BillOneContextMAC"),
+        new MySqlServerVersion(new Version(9, 0, 1))
+    ));
+
+// WINDOWS Db
+// builder.Services.AddDbContext<BillOneContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BillOneContextWIN")));
 
 builder.Services.AddControllers();
 
-// Swagger
+// ???
 builder.Services.AddEndpointsApiExplorer();
 
 // ???

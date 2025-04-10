@@ -1,0 +1,13 @@
+Para inicializar la base de datos debes primero:
+
+1- Tener MySQL instalado: 
+
+2- Cambiar en el Program.cs si estas usando Mac o Windows
+
+3- Cambiar la informacion del appsettings.json // BillOneContextWIN o MAC a tu servidor
+
+4- Hacer la primera migracion: dotnet ef migrations add InitialCreate.
+
+5- Actualizar la base de datos, para esto debes tener una base de datos llamada BillOne en tu servidor MySQl: dotnet ef database update
+
+5.5- SI hay algun cambio en la base de datos puedes hacer otra migracion pero con otro nombre y actualizan la base de datos con el paso 4 y 5
