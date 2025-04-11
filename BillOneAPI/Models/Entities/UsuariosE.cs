@@ -9,7 +9,7 @@ namespace BillOneAPI.Models.Entities
         public string RFC { get; set; } = string.Empty;
         public string Nombre { get; set; } = string.Empty;
         public string RegimenFiscal { get; set; } = string.Empty;
-        public string UsuarioCFDI { get; set; } = string.Empty;
+        public string UsoCFDI { get; set; } = string.Empty;
         public string Ciudad { get; set; } = string.Empty;
         public string Estado { get; set; } = string.Empty;
         public string CP { get; set; } = string.Empty;

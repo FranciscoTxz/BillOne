@@ -16,6 +16,9 @@ namespace BillOneAPI.Models.Entities
         public int UsuarioID { get; set; }
         public Usuario Usuario { get; set; } = null!;
 
+        // FK - Relación con Tokens
+    public ICollection<TokenE> Tokens { get; set; } = new List<TokenE>();
+
         // Relación con HistorialFacturas
         public ICollection<HistorialFactura> HistorialFacturas { get; set; } = new List<HistorialFactura>();
     }
