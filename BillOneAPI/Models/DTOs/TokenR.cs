@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BillOneAPI.Models.Request;
+namespace BillOneAPI.Models.DTOs;
 
 public class TokenRequest
 {

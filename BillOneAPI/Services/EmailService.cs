@@ -1,6 +1,6 @@
 using MailKit.Net.Smtp;
 using MimeKit;
-using BillOneAPI.Models.Request;
+using BillOneAPI.Models.DTOs;
 
 namespace BillOneAPI.Services;
 public class EmailService

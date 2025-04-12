@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BillOneAPI.Models.Request;
+namespace BillOneAPI.Models.DTOs;
 
 // Modelo de request para los datos fiscales
 public class DatosFiscalesRequest

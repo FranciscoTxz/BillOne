@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BillOneAPI.Models.Request;
+namespace BillOneAPI.Models.DTOs;
 
 /// <summary>
 /// Modelo de request para generar una factura

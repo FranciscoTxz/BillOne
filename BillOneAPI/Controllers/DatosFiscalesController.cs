@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Entities;
 using BillOneAPI.Models.Context;
-using BillOneAPI.Models.Request;
+using BillOneAPI.Models.DTOs;
 
 namespace BillOneAPI.Controllers;
 

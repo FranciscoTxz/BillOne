@@ -1,4 +1,4 @@
-namespace BillOneAPI.Models.Request;
+namespace BillOneAPI.Models.DTOs;
 
 public class EmailRequest
 {
