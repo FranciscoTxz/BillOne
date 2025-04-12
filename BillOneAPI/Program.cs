@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Context;
 using BillOneAPI.Services;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<BillOneContext>(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<EmailService>();
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 // ???
 builder.Services.AddEndpointsApiExplorer();
