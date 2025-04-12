@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Context;
+using BillOneAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<BillOneContext>(options =>
 // builder.Services.AddDbContext<BillOneContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BillOneContextWIN")));
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<EmailService>();
 
 // ???
 builder.Services.AddEndpointsApiExplorer();
