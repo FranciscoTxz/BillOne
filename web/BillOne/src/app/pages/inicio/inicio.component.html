@@ -1,1 +1,41 @@
+<div class="modal-overlay" *ngIf="showModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>CFDI 4.0</h2>
+      <h3>FACTURA ELECTRÓNICA</h3>
+    </div>
+    <div class="modal-body">
+      <p class="intro"><strong>¿Cómo registro el nombre en la factura electrónica?</strong></p>
+      <p>El nombre del emisor y receptor se debe registrar en MAYÚSCULAS y de la siguiente manera:</p>
+      <div class="columns">
+        <div class="column">
+          <div class="card">
+            <h4>Tratándose de personas físicas</h4>
+            <p>El nombre, primer apellido, segundo apellido</p>
+            <p><strong>Ejemplo:</strong></p>
+            <p class="example">RAFAELI CAMPOSORIO RUÍZO</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="card">
+            <h4>Tratándose de personas morales</h4>
+            <p>Denominación o razón social registrados en el RFC</p>
+            <p><strong>Ejemplo:</strong></p>
+            <p class="example">LA VILLA ESP0</p>
+          </div>
+        </div>
+      </div>
+      <p>Debe registrarse tal y como se encuentra en la Cédula de Identificación Fiscal y Constancia de Situación Fiscal, respetando números, espacios y signos de puntuación. Para personas morales deberá registrarse la denominación o razón social, sin considerar el concepto de sociedad mercantil (ej. "S.A. DE C.V.")</p>
+      <p>Este dato podrá ser consultado en la Constancia de Situación Fiscal emitida por el SAT en:</p>
+      <ul>
+        <li><a href="https://www.sat.gob.mx/aplicacion/login/53027/genera-tu-constancia-de-situacion-fiscal" target="_blank">Genera tu constancia de situación fiscal</a></li>
+        <li><a href="https://vwww.sat.gob.mx/aplicacion/login/28889/0bten-tu-cedula-de-identificacion-fiscal" target="_blank">Obtén tu cédula de identificación fiscal</a></li>
+      </ul>
+      <p class="warning">En caso de indicar un dato distinto al registrado en el SAT, su factura no podrá ser emitida.</p>
+      <div class="button-container">
+        <button (click)="closeModal()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <p>inicio works!</p>
