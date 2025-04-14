@@ -47,6 +47,8 @@ public class DatosFiscalesController : ControllerBase
                 _context.Usuarios.Add(usuario);
             }
 
+            // Llamar a PAC para validar el RFC
+
             // Actualizar datos
             usuario.Nombre = request.Nombre;
             usuario.RegimenFiscal = request.RegimenFiscal;

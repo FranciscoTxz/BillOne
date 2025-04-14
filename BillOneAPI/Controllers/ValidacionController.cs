@@ -85,7 +85,7 @@ public class ValidacionController : ControllerBase
         }
     }
 
-    private bool EsRfcValido(string rfc)
+    private static bool EsRfcValido(string rfc)
     {
         return !string.IsNullOrWhiteSpace(rfc) &&
                (rfc.Length == 12 || rfc.Length == 13) &&

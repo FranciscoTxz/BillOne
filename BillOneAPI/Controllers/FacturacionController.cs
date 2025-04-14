@@ -49,6 +49,11 @@ public class FacturacionController : ControllerBase
                 return BadRequest(new { Error = "No se encontraron tokens válidos" });
             }
 
+            if(request.Servicio.ToLower() != "envio" && request.Servicio.ToLower() != "boletos" && request.Servicio.ToLower() != "comida")
+            {
+                return BadRequest(new { Error = "Tipo de servicio no válido" });
+            }
+
             // Crear la nueva factura
             var factura = new Factura
             {
@@ -143,6 +148,11 @@ public class FacturacionController : ControllerBase
                     }
                 })
                 .ToListAsync();
+
+            if (facturas.Count == 0)
+            {
+                return NotFound(new { Error = "No se encontraron facturas para este RFC" });
+            }
 
             return Ok(facturas);
         }
