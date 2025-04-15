@@ -1,1 +1,23 @@
-<p>datos-fiscales works!</p>
+<form [formGroup]="form">
+    <label>
+      Nombre del servicio:
+      <input type="text" formControlName="nombreServicio" />
+      <div *ngIf="form.get('nombreServicio')?.invalid && form.get('nombreServicio')?.touched">
+        Campo obligatorio.
+      </div>
+    </label>
+  
+    <label>
+      Descripción:
+      <input type="text" formControlName="descripcion" />
+    </label>
+  
+    <label>
+      Fecha:
+      <input type="date" formControlName="fecha" />
+      <div *ngIf="form.get('fecha')?.invalid && form.get('fecha')?.touched">
+        Fecha requerida.
+      </div>
+    </label>
+  </form>
+  

@@ -31,17 +31,26 @@
     <div class="circle">4</div>
     <p>Facturas Emitidas</p>
   </div>
-  <div class="step" (click)="showCancelModal()">
+  <div class="step cancel-btn" (click)="showCancelModal()">
     <div class="circle">X</div>
     <p>Cancelar</p>
   </div>
 </div>
 
 <!-- Contenido dinámico según el paso actual -->
-<div class="content">
+<div class="content content-process">
   <ng-container *ngIf="currentStep === 1">
-    <app-datos-servicio></app-datos-servicio>
-    <button (click)="nextStep()">Seguir</button>
+
+      <ng-container *ngIf="currentStepDatosServicio === 1">
+        <app-datos-servicio class="comp-datos"></app-datos-servicio>
+        <button class="btn-first" (click)="nextStepDatosServicio()">CONTINUAR</button>
+      </ng-container>
+    
+    <ng-container *ngIf="currentStepDatosServicio === 2">
+      <app-datos-servicio></app-datos-servicio>
+      <button (click)="nextStep()">AGREGAR TOKEN</button>
+    </ng-container>
+
   </ng-container>
   <ng-container *ngIf="currentStep === 2">
     <app-datos-fiscales></app-datos-fiscales>

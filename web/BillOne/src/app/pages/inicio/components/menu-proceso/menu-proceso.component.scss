@@ -41,12 +41,12 @@
     }
 
     &.completed .circle {
-      border-color: #656565;
-      color: #656565;
+      border-color: #ffa000;
+      color: #ffa000;
     }
 
     &.completed p {
-      color: #656565;
+      color: #ffa000;
     }
 
     &.completed:not(:last-child)::after {
@@ -79,9 +79,13 @@
     }
   }
 
-  .step:last-child .circle {
-    border-color: #ced1d6;
-    color: #ced1d6;
+  .step:last-child .circle{
+    border-color: #aaaaaa;
+    color: #aaaaaa;
+  }
+
+  .step:last-child p{
+    color: #aaaaaa;
   }
 
   @media (max-width: 768px) {
@@ -182,4 +186,38 @@
       }
     }
   }
+}
+
+.content-process{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 90%;
+  max-width: 1350px;
+  margin: 20px auto;
+  padding: 10px 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 70vh;
+  position: relative;
+
+  .btn-first{
+    position: absolute;
+    top: 160px;
+    left: 87%;
+    transform: translateX(-50%);
+    padding: 10px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #ffa000;
+    color: #fff;
+  }
+}
+
+.comp-datos{
+  width: 100%;
+  height: 100%;
 }
