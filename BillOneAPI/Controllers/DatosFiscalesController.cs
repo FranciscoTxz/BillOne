@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Entities;
 using BillOneAPI.Models.Context;
 using BillOneAPI.Models.DTOs;
+using BillOneAPI.Metrics;
 
 namespace BillOneAPI.Controllers;
 
@@ -86,6 +87,7 @@ public class DatosFiscalesController : ControllerBase
                 return NotFound();
             }
 
+            CustomMetrics.Increment("GetByRFC"); // Incrementar métrica
             return Ok(usuario);
         }
         catch (Exception ex)
