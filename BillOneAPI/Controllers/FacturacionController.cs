@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Entities;
 using BillOneAPI.Models.Context;
 using BillOneAPI.Models.DTOs;
+using BillOneAPI.Services;
 
 namespace BillOneAPI.Controllers;
 
@@ -15,11 +16,74 @@ public class FacturacionController : ControllerBase
 {
     private readonly BillOneContext _context;
     private readonly ILogger<FacturacionController> _logger;
+    private readonly PdfService _pdfService;
 
-    public FacturacionController(BillOneContext context, ILogger<FacturacionController> logger)
+    public FacturacionController(BillOneContext context, ILogger<FacturacionController> logger, PdfService pdfService)
     {
         _context = context;
         _logger = logger;
+        _pdfService = pdfService;
+    }
+
+    //endpoint para previsualizacion de pdf
+    // /api/Facturacion/preview
+    [HttpPost("preview")]
+    public async Task<IActionResult> GenerarPreviewFactura([FromBody] FacturaPreviewRequest request)
+    {
+        try
+        {
+            // Validar que el usuario exista
+            var usuario = await _context.Usuarios.FindAsync(request.UsuarioID);
+            if (usuario == null)
+            {
+                return NotFound(new { Error = "Usuario no encontrado" });
+            }
+
+            // Obtener emisor (asumimos que hay solo uno)
+            var emisor = await _context.Emisores.FirstOrDefaultAsync();
+            if (emisor == null)
+            {
+                return StatusCode(500, new { Error = "Datos del emisor no configurados" });
+            }
+
+            // Obtener tokens
+            var tokens = await _context.Tokens
+                .Where(t => request.TokensIDs.Contains(t.TokenID) && t.FacturaID == null)
+                .ToListAsync();
+
+            if (tokens.Count == 0)
+            {
+                return BadRequest(new { Error = "No se encontraron tokens válidos" });
+            }
+
+            // Validar tipo de servicio
+            if (request.Servicio.ToLower() != "envio" &&
+               request.Servicio.ToLower() != "boletos" &&
+               request.Servicio.ToLower() != "comida")
+            {
+                return BadRequest(new { Error = "Tipo de servicio no válido" });
+            }
+
+            // Crear objeto factura temporal (no se guarda en BD)
+            var facturaPreview = new Factura
+            {
+                UsuarioID = usuario.UsuarioID,
+                Total = tokens.Sum(t => t.Monto),
+                Servicio = request.Servicio,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            // Generar PDF
+            var pdfBytes = _pdfService.GeneratePdf(facturaPreview, usuario, emisor, tokens);
+
+            // Devolver PDF como respuesta
+            return File(pdfBytes, "application/pdf", $"FacturaPreview_{DateTime.Now:yyyyMMddHHmmss}.pdf");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al generar previsualización de factura");
+            return StatusCode(500, new { Error = "Error interno al generar previsualización" });
+        }
     }
 
     /// <summary>
@@ -44,12 +108,13 @@ public class FacturacionController : ControllerBase
                 .Where(t => request.TokensIDs.Contains(t.TokenID))
                 .ToListAsync();
 
+            tokens = tokens.Where(t => t.FacturaID == null).ToList();
             if (tokens.Count == 0)
             {
-                return BadRequest(new { Error = "No se encontraron tokens válidos" });
+                return BadRequest(new { Error = "No se encontraron tokens válidos o ya han sido facturados" });
             }
 
-            if(request.Servicio.ToLower() != "envio" && request.Servicio.ToLower() != "boletos" && request.Servicio.ToLower() != "comida")
+            if (request.Servicio.ToLower() != "envio" && request.Servicio.ToLower() != "boletos" && request.Servicio.ToLower() != "comida")
             {
                 return BadRequest(new { Error = "Tipo de servicio no válido" });
             }

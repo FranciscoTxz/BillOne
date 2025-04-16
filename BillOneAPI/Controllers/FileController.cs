@@ -23,7 +23,8 @@ public class FileController : ControllerBase
         await _emailService.SendEmailAsync(request);
         return Ok("Correo enviado correctamente.");
     }
-
+}
+/*
     [HttpGet("generar")]
     public IActionResult GenerarPdf([FromBody] PdfFileRequest request)
     {
@@ -34,4 +35,4 @@ public class FileController : ControllerBase
         return File(pdfBytes, "application/pdf", "documento.pdf");
     }
 }
-
+*/

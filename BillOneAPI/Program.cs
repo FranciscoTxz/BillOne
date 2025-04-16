@@ -6,18 +6,21 @@ using QuestPDF.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+/*
 // MAC DB
 builder.Services.AddDbContext<BillOneContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("BillOneContextMAC"),
         new MySqlServerVersion(new Version(9, 0, 1))
-    ));
+    ));*/
 
 // WINDOWS Db
-// builder.Services.AddDbContext<BillOneContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("BillOneContextWIN")));
+builder.Services.AddDbContext<BillOneContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("BillOneContextWIN2"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("BillOneContextWIN2"))));;
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<PdfService>();
 
 QuestPDF.Settings.License = LicenseType.Community;
 
