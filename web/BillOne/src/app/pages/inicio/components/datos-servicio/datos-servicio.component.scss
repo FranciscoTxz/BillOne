@@ -26,6 +26,8 @@
       border: 1px solid #ccc;
       background-color: #f9f9f9;
       color: #333;
+      border: none;
+      border-bottom: 1px solid black;
       cursor: pointer;
       transition: border-color 0.2s, background-color 0.2s;
 
@@ -41,8 +43,40 @@
 
       option {
         font-size: 1rem;
-        color: #444444;
+        line-height: 2rem; // Ajusta la altura de cada opción
+        color: #333;
+        background-color: #f0f0f0;
+        padding: 5px;
+        border: none;
+      }
+
+      option:hover {
+        background-color: #e0e0e0; // Fondo al pasar el mouse sobre una opción
+        color: #000; // Color del texto al pasar el mouse
+      }
+
+      option:focus {
+        background-color: #d0d0d0; // Fondo al seleccionar una opción
+        color: #000; // Color del texto al seleccionar
       }
     }
+  }
+}
+
+.custom-button {
+  background-color: #1976d2; // Cambia el color de fondo
+  color: #fff; // Cambia el color del texto
+  font-size: 16px; // Tamaño del texto
+  padding: 10px 20px; // Espaciado interno
+  border-radius: 8px; // Bordes redondeados
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); // Sombra
+
+  &:hover {
+    background-color: #1565c0; // Color de fondo al pasar el mouse
+  }
+
+  &:active {
+    background-color: #0d47a1; // Color de fondo al hacer clic
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); // Sombra más pequeña
   }
 }

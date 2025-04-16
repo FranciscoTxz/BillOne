@@ -215,6 +215,22 @@
     background-color: #ffa000;
     color: #fff;
   }
+
+  .btn-second{
+    position: absolute;
+    top: 500px;
+    width: 200px;
+    left: 87%;
+    transform: translateX(-50%);
+    padding: 10px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #ffa000;
+    color: #fff;
+  }
 }
 
 .comp-datos{

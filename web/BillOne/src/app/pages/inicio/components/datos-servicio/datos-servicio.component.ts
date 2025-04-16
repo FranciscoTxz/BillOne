@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { CommonModule } from '@angular/common'; // Importa CommonModule para *ngIf y *ngFor
 
 @Component({
   selector: 'app-datos-servicio',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [
+    CommonModule, // Necesario para directivas como *ngIf y *ngFor
+    ReactiveFormsModule, // Para formularios reactivos
+    MatButtonModule, // Para botones de Angular Material
+    MatIconModule, // Para íconos de Angular Material
+    MatSlideToggleModule // Para el toggle de Angular Material
+  ],
   templateUrl: './datos-servicio.component.html',
   styleUrls: ['./datos-servicio.component.scss']
 })

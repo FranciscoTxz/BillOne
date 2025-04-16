@@ -5,11 +5,20 @@ import { ConfirmarDatosComponent } from '../confirmar-datos/confirmar-datos.comp
 import { DatosFiscalesComponent } from '../datos-fiscales/datos-fiscales.component';
 import { DatosServicioComponent } from '../datos-servicio/datos-servicio.component';
 import { FacturasEmitidasComponent } from '../facturas-emitidas/facturas-emitidas.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2.component";
+
 
 @Component({
   selector: 'app-menu-proceso',
   standalone: true,
-  imports: [RouterModule, CommonModule, ConfirmarDatosComponent, DatosFiscalesComponent, DatosServicioComponent, FacturasEmitidasComponent],
+  imports: [RouterModule, CommonModule, ConfirmarDatosComponent, DatosFiscalesComponent, DatosServicioComponent, FacturasEmitidasComponent,
+    MatButtonModule, // Para botones de Angular Material
+    MatIconModule, // Para íconos de Angular Material
+    MatSlideToggleModule // Para el toggle de Angular Material
+    , DatosServicioP2Component],
   templateUrl: './menu-proceso.component.html',
   styleUrl: './menu-proceso.component.scss'
 })
@@ -41,6 +50,7 @@ export class MenuProcesoComponent {
   nextStepDatosServicio(): void {
     if (this.datosServicioComponent?.isValid()) {
       this.formData.datosServicio = this.datosServicioComponent.getData();
+      console.log(this.formData);
       if (this.currentStepDatosServicio < 2) {
         this.currentStepDatosServicio++;
       } else {
@@ -56,6 +66,7 @@ export class MenuProcesoComponent {
       case 1:
         if (this.datosServicioComponent?.isValid()) {
           this.formData.datosServicio = this.datosServicioComponent.getData();
+          console.log(this.formData);
           this.currentStep++;
         } else {
           alert('Completa correctamente los datos fiscales.');

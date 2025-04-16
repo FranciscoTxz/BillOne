@@ -1,0 +1,84 @@
+// Contenedor principal del formulario
+.form-container {
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+// Grupo de cada campo del formulario
+.form-group {
+  margin-bottom: 16px;
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #1976d2; // Color azul al enfocar
+      outline: none;
+      box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
+    }
+  }
+
+  mat-checkbox .mat-checkbox-label {
+    color: #000 !important;
+  }
+}
+
+// Botón para agregar token
+button {
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #1976d2; // Azul primario
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #1565c0; // Azul más oscuro al pasar el mouse
+  }
+
+  &:disabled {
+    background-color: #ccc; // Color gris cuando está deshabilitado
+    cursor: not-allowed;
+  }
+}
+
+// Checkbox para el aviso de privacidad
+mat-checkbox {
+  margin-top: 16px;
+
+  .mat-checkbox-label {
+    font-size: 14px;
+    color: #000; // Cambia el color del texto a negro
+  }
+}
+
+// Mensajes de error
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.separador{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
