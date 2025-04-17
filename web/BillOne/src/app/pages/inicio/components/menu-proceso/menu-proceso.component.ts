@@ -1,3 +1,4 @@
+// Importaciones necesarias para el componente
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
@@ -10,92 +11,125 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2.component";
 
-
+// Decorador del componente
 @Component({
-  selector: 'app-menu-proceso',
-  standalone: true,
-  imports: [RouterModule, CommonModule, ConfirmarDatosComponent, DatosFiscalesComponent, DatosServicioComponent, FacturasEmitidasComponent,
+  selector: 'app-menu-proceso', // Selector del componente
+  standalone: true, // Indica que este componente es independiente
+  imports: [
+    RouterModule, 
+    CommonModule, 
+    ConfirmarDatosComponent, 
+    DatosFiscalesComponent, 
+    DatosServicioComponent, 
+    FacturasEmitidasComponent,
     MatButtonModule, // Para botones de Angular Material
     MatIconModule, // Para íconos de Angular Material
-    MatSlideToggleModule // Para el toggle de Angular Material
-    , DatosServicioP2Component],
-  templateUrl: './menu-proceso.component.html',
-  styleUrl: './menu-proceso.component.scss'
+    MatSlideToggleModule, // Para el toggle de Angular Material
+    DatosServicioP2Component // Componente hijo para el segundo paso de datos de servicio
+  ],
+  templateUrl: './menu-proceso.component.html', // Ruta del archivo HTML del componente
+  styleUrl: './menu-proceso.component.scss' // Ruta del archivo SCSS del componente
 })
 export class MenuProcesoComponent {
-  currentStep: number = 1; // Controla el paso actual
-  currentStepDatosServicio: number = 1; // Controla el paso actual dentro de el proceso datos servicio
+  // Variables para controlar el flujo del proceso
+  currentStep: number = 1; // Controla el paso actual del proceso principal
+  currentStepDatosServicio: number = 1; // Controla el paso actual dentro del proceso de datos de servicio
   showModal: boolean = false; // Controla la visibilidad del modal
 
-  // Almacén de todos los datos del cliente
+  // Objeto para almacenar los datos del cliente en diferentes pasos
   formData = {
-    datosServicio: {},
-    datosFiscales: {},
-    confirmarDatos: {}
+    datosServicio: {}, // Datos del servicio
+    datosFiscales: {}, // Datos fiscales
+    confirmarDatos: {} // Datos de confirmación
   };
 
-  // Referencias a los componentes hijos
+  // Referencias a los componentes hijos para acceder a sus métodos y datos
   @ViewChild(DatosServicioComponent) datosServicioComponent!: DatosServicioComponent;
   @ViewChild(DatosFiscalesComponent) datosFiscalesComponent!: DatosFiscalesComponent;
   @ViewChild(ConfirmarDatosComponent) confirmarDatosComponent!: ConfirmarDatosComponent;
   @ViewChild(FacturasEmitidasComponent) facturasEmitidasComponent!: FacturasEmitidasComponent;
+  @ViewChild(DatosServicioP2Component) datosServicioP2Component!: DatosServicioP2Component;
 
+  // Constructor para inyectar el servicio de enrutamiento
   constructor(private router: Router) {}
 
+  // Método para cambiar al paso seleccionado
   setStep(step: number): void {
-    this.currentStep = step; // Cambia al paso seleccionado
-    this.currentStepDatosServicio = 1; // Reinicia el paso dentro de el proceso datos servicio
+    this.currentStep = step; // Cambia al paso principal seleccionado
+    this.currentStepDatosServicio = 1; // Reinicia el paso dentro del proceso de datos de servicio
   }
 
+  // Método para avanzar dentro del proceso de datos de servicio
   nextStepDatosServicio(): void {
-    if (this.datosServicioComponent?.isValid()) {
-      this.formData.datosServicio = this.datosServicioComponent.getData();
-      console.log(this.formData);
-      if (this.currentStepDatosServicio < 2) {
-        this.currentStepDatosServicio++;
+    if (this.currentStepDatosServicio === 1) {
+      // Validación para el primer subpaso
+      if (this.datosServicioComponent?.isValid()) {
+        this.formData.datosServicio = this.datosServicioComponent.getData(); // Guarda los datos del servicio
+        console.log(this.formData);
+        this.currentStepDatosServicio++; // Avanza al siguiente subpaso
       } else {
-        this.currentStep++; // Avanza al siguiente paso general si ya es el último subpaso
+        alert('Completa correctamente los datos del servicio.'); // Muestra un mensaje de error
       }
-    } else {
-      alert('Completa correctamente los datos del servicio.');
+    } else if (this.currentStepDatosServicio === 2) {
+      // Validación para el segundo subpaso (tokens y checkbox)
+      const hasTokens = this.datosServicioP2Component?.tokens.length > 0; // Verifica si hay tokens registrados
+      const isCheckboxChecked = this.datosServicioP2Component?.form.get('aceptaAviso')?.value; // Verifica si el checkbox está seleccionado
+
+      if (hasTokens && isCheckboxChecked) {
+        console.log('Tokens registrados:', this.datosServicioP2Component.tokens); // Muestra los tokens registrados
+        this.currentStep++; // Avanza al siguiente paso general
+      } else {
+        if (!hasTokens) {
+          alert('Debe registrar al menos un token en la lista.'); // Muestra un mensaje de error si no hay tokens
+        }
+        if (!isCheckboxChecked) {
+          alert('Debe aceptar el aviso de privacidad.'); // Muestra un mensaje de error si el checkbox no está seleccionado
+        }
+      }
     }
   }
 
+  // Método para avanzar al siguiente paso general
   nextStep(): void {
     switch (this.currentStep) {
       case 1:
+        // Validación para el primer paso
         if (this.datosServicioComponent?.isValid()) {
-          this.formData.datosServicio = this.datosServicioComponent.getData();
+          this.formData.datosServicio = this.datosServicioComponent.getData(); // Guarda los datos del servicio
           console.log(this.formData);
-          this.currentStep++;
+          this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.');
+          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
         }
         break;
 
       case 2:
+        // Validación para el segundo paso
         if (this.datosFiscalesComponent?.isValid()) {
-          this.formData.datosFiscales = this.datosFiscalesComponent.getData();
-          this.currentStep++;
+          this.formData.datosFiscales = this.datosFiscalesComponent.getData(); // Guarda los datos fiscales
+          this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.');
+          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
         }
         break;
     }
   }
 
+  // Método para mostrar el modal de cancelación
   showCancelModal(): void {
     this.showModal = true; // Muestra el modal
   }
 
+  // Método para cerrar el modal de cancelación
   closeModal(): void {
     this.showModal = false; // Oculta el modal
   }
 
+  // Método para cancelar el proceso y regresar al inicio
   cancel(): void {
     this.showModal = false; // Oculta el modal
     this.currentStep = 1; // Regresa al primer paso
-    this.currentStepDatosServicio = 1; // Regresa al primer paso dentro de el proceso datos servicio
-    this.router.navigate(['/inicio']);
+    this.currentStepDatosServicio = 1; // Regresa al primer subpaso dentro del proceso de datos de servicio
+    this.router.navigate(['/inicio']); // Redirige al inicio
   }
 }

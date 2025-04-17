@@ -41,12 +41,12 @@
     }
 
     &.completed .circle {
-      border-color: #ffa000;
-      color: #ffa000;
+      border-color: #1976d2;
+      color: #1976d2;
     }
 
     &.completed p {
-      color: #ffa000;
+      color: #1976d2;
     }
 
     &.completed:not(:last-child)::after {
@@ -188,7 +188,7 @@
   }
 }
 
-.content-process{
+.content-process {
   display: flex;
   justify-content: space-between;
   flex-wrap: nowrap;
@@ -201,39 +201,124 @@
   height: 70vh;
   position: relative;
 
-  .btn-first{
+  .btn-first,
+  .btn-second {
     position: absolute;
-    top: 160px;
-    left: 87%;
+    bottom: 20px; // Ajusta los botones a la parte inferior
+    left: 50%;
     transform: translateX(-50%);
     padding: 10px 25px;
     font-size: 1rem;
     border: none;
-    border-radius: 0px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: #ffa000;
+    background-color: #1976d2;
     color: #fff;
+
+    &:hover {
+      background-color: #1976d2;
+    }
   }
 
-  .btn-second{
-    position: absolute;
-    top: 500px;
-    width: 200px;
-    left: 87%;
-    transform: translateX(-50%);
-    padding: 10px 25px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #ffa000;
-    color: #fff;
+  .comp-datos {
+    width: 100%;
+    height: 100%;
   }
 }
 
-.comp-datos{
-  width: 100%;
-  height: 100%;
+// Media queries para responsividad
+@media (max-width: 768px) {
+  .content-process {
+    flex-direction: column; // Cambia a diseño en columna
+    align-items: center;
+    height: auto; // Ajusta la altura automáticamente
+
+    .btn-first,
+    .btn-second {
+      width: 90%; // Botones ocupan el 90% del ancho
+      font-size: 0.9rem; // Reduce el tamaño de fuente
+      padding: 8px 20px; // Ajusta el padding
+    }
+
+    .comp-datos {
+      width: 100%;
+      height: auto; // Ajusta la altura automáticamente
+      padding: 10px; // Agrega padding interno
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .content-process {
+    padding: 5px; // Reduce el padding en pantallas pequeñas
+
+    .btn-first,
+    .btn-second {
+      width: 100%; // Botones ocupan todo el ancho disponible
+      font-size: 0.8rem; // Reduce aún más el tamaño de fuente
+      padding: 6px 15px; // Ajusta el padding
+    }
+
+    .comp-datos {
+      padding: 5px; // Reduce el padding interno
+    }
+  }
+}
+
+.lista-tokens {
+  position: relative; // Asegura que el overlay se posicione relativo a este contenedor
+  margin-top: 20px;
+  width: 100%; // Ocupa todo el ancho disponible
+  height: 240px; // Altura fija
+  padding: 10px;
+  overflow-y: auto; // Habilita desplazamiento vertical si hay demasiados elementos
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .token-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    button {
+      color: #d9534f;
+    }
+  }
+
+  // Overlay para el contenedor de tokens
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); // Fondo semitransparente
+    z-index: 1; // Asegura que el overlay esté encima del contenido
+    display: none; // Por defecto, el overlay está oculto
+  }
+
+  &.overlay-active::before {
+    display: block; // Muestra el overlay cuando se activa la clase
+  }
+
+  .token-card {
+    position: relative;
+    z-index: 2; // Asegura que las tarjetas estén encima del overlay
+  }
 }

@@ -50,9 +50,11 @@
     
     <ng-container *ngIf="currentStepDatosServicio === 2">
       <app-datos-servicio-p2 class="comp-datos"></app-datos-servicio-p2>
-      <button mat-fab extended class="custom-button btn-second" (click)="nextStepDatosServicio()">
-        DATOS FISCALES
-      </button>
+      <div class="actions-row">
+        <button mat-fab extended class="custom-button btn-second" (click)="nextStepDatosServicio()">
+          DATOS FISCALES
+        </button>
+      </div>
     </ng-container>
 
   </ng-container>

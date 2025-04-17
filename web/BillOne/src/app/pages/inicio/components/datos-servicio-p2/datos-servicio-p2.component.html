@@ -3,49 +3,69 @@
     <h2>Facturación de Boletos</h2>
     <p>Ingrese los datos para elaborar su factura</p>
 
-    <!-- Campo para RFC Cliente -->
-    <div class="form-group">
-      <label for="rfcCliente">RFC Cliente</label>
-      <input
-        id="rfcCliente"
-        type="text"
-        formControlName="rfcCliente"
-        placeholder="Ingresa el RFC del cliente"
-      />
-      <div *ngIf="form.get('rfcCliente')?.invalid && form.get('rfcCliente')?.touched" class="error">
-        RFC es requerido y debe tener 12 o 13 caracteres.
+    <!-- Contenedor para los dos inputs -->
+    <div class="input-row">
+      <!-- Campo para RFC Cliente -->
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>RFC Cliente</mat-label>
+          <input
+            matInput
+            id="rfcCliente"
+            type="text"
+            formControlName="rfcCliente"
+            placeholder="Ingresa el RFC del cliente"
+          />
+        </mat-form-field>
+        <div *ngIf="form.get('rfcCliente')?.invalid && form.get('rfcCliente')?.touched" class="error">
+          RFC es requerido y debe tener 12 o 13 caracteres.
+        </div>
       </div>
-    </div>
 
-    <!-- Campo para Token del boleto -->
-    <div class="form-group">
-      <label for="tokenBoleto">Token del Boleto</label>
-      <input
-        id="tokenBoleto"
-        type="text"
-        formControlName="tokenBoleto"
-        placeholder="Ingresa el token del boleto"
-      />
-      <div *ngIf="form.get('tokenBoleto')?.invalid && form.get('tokenBoleto')?.touched" class="error">
-        El token es requerido.
+      <!-- Campo para Token del boleto -->
+      <div class="form-group">
+        <mat-form-field appearance="outline">
+          <mat-label>Token del Boleto</mat-label>
+          <input
+            matInput
+            id="tokenBoleto"
+            type="text"
+            formControlName="tokenBoleto"
+            placeholder="Ingresa el token del boleto"
+          />
+        </mat-form-field>
+        <div *ngIf="form.get('tokenBoleto')?.invalid && form.get('tokenBoleto')?.touched" class="error">
+          El token es requerido.
+        </div>
       </div>
     </div>
 
     <!-- Botón para agregar token -->
     <button
       mat-raised-button
-      color="primary"
       (click)="onAddToken()"
       [disabled]="form.invalid"
     >
-      Agregar Token
+      AGREGAR TOKEN
     </button>
+
+    <hr class="separador">
+
+    <!-- Lista de tokens -->
+    <div class="lista-tokens">
+      <div class="token-card" *ngFor="let token of tokens">
+        <p>{{ token }}</p>
+        <button mat-icon-button color="warn" (click)="removeToken(token)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
 
     <hr class="separador">
 
     <!-- Checkbox para aceptar aviso de privacidad -->
     <div class="form-group">
-      <mat-checkbox formControlName="aceptaAviso" class="checkbox" style="color: black;">
+      <mat-checkbox formControlName="aceptaAviso" class="checkbox">
         Acepto el aviso de privacidad de datos
       </mat-checkbox>
       <div *ngIf="form.get('aceptaAviso')?.invalid && form.get('aceptaAviso')?.touched" class="error">

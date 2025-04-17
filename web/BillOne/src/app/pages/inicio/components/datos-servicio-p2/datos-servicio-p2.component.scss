@@ -1,13 +1,70 @@
-// Contenedor principal del formulario
 .form-container {
   margin: 0 auto;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #666;
+  }
+
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; // Espaciado entre los inputs
+    width: 100%; // Asegura que los inputs ocupen todo el ancho disponible
+
+    .form-group {
+      flex: 1; // Hace que ambos inputs ocupen el mismo espacio
+      display: flex;
+      flex-direction: column;
+      min-height: 80px; // Reserva espacio para los mensajes de error
+
+      mat-form-field {
+        width: 100%; // Asegura que los campos ocupen todo el ancho disponible
+      }
+
+      .error {
+        font-size: 0.875rem;
+        color: #d9534f;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .separador {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
+  .checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #555;
+
+    .error {
+      font-size: 0.875rem;
+      color: #d9534f;
+      margin-top: 5px;
+    }
+  }
 }
 
 // Grupo de cada campo del formulario
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 32px; // Espacio entre campos
+  position: relative; // Necesario para que los mensajes de error se posicionen correctamente
 
   label {
     display: block;
@@ -23,16 +80,16 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: border-color 0.3s;
-
-    &:focus {
-      border-color: #1976d2; // Color azul al enfocar
-      outline: none;
-      box-shadow: 0 0 4px rgba(25, 118, 210, 0.3);
-    }
   }
 
-  mat-checkbox .mat-checkbox-label {
-    color: #000 !important;
+  mat-form-field {
+    width: 100%; // Asegura que los campos ocupen todo el ancho disponible
+  }
+
+  .error {
+    font-size: 0.875rem;
+    color: #d9534f;
+    margin-top: 5px;
   }
 }
 
@@ -42,20 +99,42 @@ button {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  font-weight: bold;
-  color: #fff;
+  color: #fff !important;
   background-color: #1976d2; // Azul primario
   border: none;
-  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #1565c0; // Azul más oscuro al pasar el mouse
+    background-color: #1976d2; // Azul más oscuro al pasar el mouse
   }
 
   &:disabled {
-    background-color: #ccc; // Color gris cuando está deshabilitado
+    background-color: #4b5258; // Color gris cuando está deshabilitado
+    color: #d4d4d6 !important;
+    cursor: not-allowed;
+  }
+}
+
+// Botón para agregar token
+button[mat-raised-button] {
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #fff !important;
+  background-color: #1976d2 !important; // Azul específico
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #115293 !important; // Azul más oscuro al pasar el mouse
+  }
+
+  &:disabled {
+    background-color: #4b5258 !important; // Color gris cuando está deshabilitado
+    color: #d4d4d6 !important;
     cursor: not-allowed;
   }
 }
@@ -76,9 +155,41 @@ mat-checkbox {
   font-size: 12px;
   margin-top: 4px;
   font-style: italic;
+  position: absolute; // Posiciona el mensaje de error sin afectar el flujo
+  bottom: -18px; // Ajusta la posición del mensaje debajo del campo
 }
 
-.separador{
-    margin-top: 16px;
-    margin-bottom: 16px;
+.separador {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.lista-tokens {
+  margin-top: 20px;
+  width: 100%; // Ocupa todo el ancho disponible
+  height: 240px; // Altura fija
+  padding: 10px;
+  overflow-y: auto; // Habilita el desplazamiento vertical si hay demasiados elementos
+
+  .token-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    button {
+      color: #d9534f;
+    }
+  }
 }
