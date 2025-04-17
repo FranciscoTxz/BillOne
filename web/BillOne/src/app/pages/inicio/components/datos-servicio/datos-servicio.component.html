@@ -1,0 +1,13 @@
+<div class="form-div">
+<form [formGroup]="form" class="selector">
+  <h2>Selecciona la opción que deseas facturar</h2>
+  
+  <label>
+    <select formControlName="tipoServicio">
+      <option value="facturacion-boletos">Facturación de Boletos</option>
+      <option value="facturacion-boletos-primera-plus">Facturación de Envios Primera Plus</option>
+      <option value="facturacion-consumo-alimentos">Facturación de Consumo de Alimentos</option>
+    </select>
+  </label>
+</form>
+</div>

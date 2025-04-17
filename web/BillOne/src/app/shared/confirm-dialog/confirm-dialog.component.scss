@@ -1,0 +1,50 @@
+.dialog-container {
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2; // Color principal de la app
+  margin-bottom: 10px;
+}
+
+.dialog-content {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+
+  .cancel-button {
+    color: #555;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .confirm-button {
+    background-color: #d9534f; // Color de advertencia
+    color: #fff;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #c9302c; // Color más oscuro al pasar el mouse
+    }
+  }
+}

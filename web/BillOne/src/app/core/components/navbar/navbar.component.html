@@ -1,11 +1,18 @@
 <!-- navbar.component.html -->
 <nav>
-    <ul>
-      <li><a routerLink="/">INICIO</a></li>
-      <li><a routerLink="/aviso-privacidad">AVISO DE PRIVACIDAD</a></li>
-      <li><a routerLink="/faq">PREGUNTAS FRECUENTES</a></li>
-      <li><a routerLink="/contacto">CONTACTO</a></li>
-      <li><a routerLink="/gfa">CONECTA GFA</a></li>
-    </ul>
+  <div class="hamburger" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <div class="logo">
+    <img src="https://www.facturaelectronicagfa.mx/assets/img/logo.png" alt="Logo de la página" />
+  </div>
+  <ul [class.active]="menuOpen">
+    <a routerLink="/"><li>INICIO</li></a>
+    <a routerLink="/aviso-privacidad"><li>AVISO DE PRIVACIDAD</li></a>
+    <a routerLink="/faq"><li>PREGUNTAS FRECUENTES</li></a>
+    <a routerLink="/contacto"><li>CONTACTO</li></a>
+    <a routerLink="/gfa"><li>CONECTA GFA</li></a>
+  </ul>
 </nav>
-  

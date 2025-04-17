@@ -1,0 +1,11 @@
+#main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 110vh;
+  background-color: #fff;
+}
+
+#main-content {
+  flex: 1;
+  margin-top: 70px; // Ajusta este valor a la altura del navbar
+}
