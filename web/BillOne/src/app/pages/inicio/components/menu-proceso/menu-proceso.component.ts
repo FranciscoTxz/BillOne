@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2.component";
+import { HttpClientModule } from '@angular/common/http';
+import { ChatComponent } from '../../../chat-component/chat-component.component';
 
 // Decorador del componente
 @Component({
@@ -25,7 +27,9 @@ import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2
     MatButtonModule, // Para botones de Angular Material
     MatIconModule, // Para íconos de Angular Material
     MatSlideToggleModule, // Para el toggle de Angular Material
-    DatosServicioP2Component // Componente hijo para el segundo paso de datos de servicio
+    DatosServicioP2Component, // Componente hijo para el segundo paso de datos de servicio
+    HttpClientModule,
+    ChatComponent
   ],
   templateUrl: './menu-proceso.component.html', // Ruta del archivo HTML del componente
   styleUrl: './menu-proceso.component.scss' // Ruta del archivo SCSS del componente
@@ -35,6 +39,7 @@ export class MenuProcesoComponent {
   currentStep: number = 1; // Controla el paso actual del proceso principal
   currentStepDatosServicio: number = 1; // Controla el paso actual dentro del proceso de datos de servicio
   showModal: boolean = false; // Controla la visibilidad del modal
+  isChatVisible = false; // Controla la visibilidad del chat
 
   // Objeto para almacenar los datos del cliente en diferentes pasos
   formData = {
@@ -57,6 +62,16 @@ export class MenuProcesoComponent {
   setStep(step: number): void {
     this.currentStep = step; // Cambia al paso principal seleccionado
     this.currentStepDatosServicio = 1; // Reinicia el paso dentro del proceso de datos de servicio
+  }
+
+  // Method to toggle chat visibility
+  toggleChat(): void {
+    this.isChatVisible = !this.isChatVisible;
+  }
+
+   // Method to hide chat
+   hideChat(): void {
+    this.isChatVisible = false;
   }
 
   // Método para avanzar dentro del proceso de datos de servicio

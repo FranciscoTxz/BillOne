@@ -72,6 +72,19 @@
   </ng-container>
 </div>
 
+<button 
+  class="chat-button" 
+  (click)="toggleChat()" 
+  [ngClass]="{'active': isChatVisible}"
+  aria-label="Chat con asistente">
+  <mat-icon>{{ isChatVisible ? 'close' : 'chat' }}</mat-icon>
+  <span>{{ isChatVisible ? 'Cerrar' : 'Asistente' }}</span>
+</button>
+
+<!-- Chat component (conditionally rendered) -->
+<app-chat *ngIf="isChatVisible" (close)="hideChat()"></app-chat>
+
+
 <!-- Modal para confirmar cancelación -->
 <div class="modal" *ngIf="showModal">
   <div class="modal-content">

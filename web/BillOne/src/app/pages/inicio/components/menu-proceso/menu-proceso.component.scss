@@ -322,3 +322,48 @@
     z-index: 2; // Asegura que las tarjetas estén encima del overlay
   }
 }
+
+.chat-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 900;
+  
+  &:hover {
+    background-color: #1565c0;
+    transform: translateY(-2px);
+  }
+  
+  &.active {
+    background-color: #e53935;
+  }
+  
+  mat-icon {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-button {
+    bottom: 15px;
+    right: 15px;
+    padding: 8px 16px;
+    font-size: 14px;
+    
+    span {
+      display: none;
+    }
+  }
+}
