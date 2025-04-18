@@ -51,6 +51,7 @@ export class ChatService {
       
     }
 
+    console.log(this.apiKey);
 
     return this.http.post<ChatResponse>(this.apiUrl, body, { headers });
   }
