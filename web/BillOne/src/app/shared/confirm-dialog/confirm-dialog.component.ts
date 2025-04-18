@@ -6,13 +6,14 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
   selector: 'app-confirm-dialog',
   template: `
     <div class="dialog-container">
-      <h2 mat-dialog-title class="dialog-title">Confirmación</h2>
+      <h2 mat-dialog-title class="dialog-title">Aviso</h2>
       <mat-dialog-content class="dialog-content">
-        <p>{{ data.message }}</p>
+        <p [innerHTML]="data.message"></p>
       </mat-dialog-content>
-      <mat-dialog-actions align="end" class="dialog-actions">
-        <button mat-button class="cancel-button" (click)="onCancel()">Cancelar</button>
-        <button mat-raised-button color="warn" class="confirm-button" (click)="onConfirm()">Eliminar</button>
+      <mat-dialog-actions align="center" class="dialog-actions">
+        <button mat-raised-button color="primary" class="confirm-button" (click)="onConfirm()">
+          {{ data.confirmText || 'Estoy de acuerdo' }}
+        </button>
       </mat-dialog-actions>
     </div>
   `,
@@ -23,12 +24,11 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { message: string }
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      message: string; 
+      confirmText?: string; 
+    }
   ) {}
-
-  onCancel(): void {
-    this.dialogRef.close(false); // Cierra el diálogo y devuelve "false"
-  }
 
   onConfirm(): void {
     this.dialogRef.close(true); // Cierra el diálogo y devuelve "true"

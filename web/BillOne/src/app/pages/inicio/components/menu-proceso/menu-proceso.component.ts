@@ -48,7 +48,20 @@ export class MenuProcesoComponent {
     datosServicio: {
       tokens: [] as Token[] // Define el tipo del array como Token[]
     },
-    datosFiscales: {}, // Datos fiscales
+    datosFiscales: {
+      rfc: '',
+      nombre: '',
+      regimen: '',
+      usoCfdi: '',
+      cp: '',
+      estado: '',
+      ciudad: '',
+      colonia: '',
+      calle: '',
+      numExt: '',
+      numInt: '',
+      correos: [] as string[] // Agrega un campo para los correos electrónicos
+    },
     confirmarDatos: {} // Datos de confirmación
   };
 
@@ -106,21 +119,44 @@ export class MenuProcesoComponent {
         // Validación para el primer paso
         if (this.datosServicioComponent?.isValid()) {
           this.formData.datosServicio = this.datosServicioComponent.getData(); // Guarda los datos del servicio
-          console.log(this.formData);
+          console.log('Datos del servicio:', this.formData.datosServicio);
           this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
+          alert('Completa correctamente los datos del servicio.'); // Muestra un mensaje de error
         }
         break;
 
       case 2:
         // Validación para el segundo paso
         if (this.datosFiscalesComponent?.isValid()) {
-          this.formData.datosFiscales = this.datosFiscalesComponent.getData(); // Guarda los datos fiscales
+          this.formData.datosFiscales = this.datosFiscalesComponent.getData(); // Guarda los datos fiscales, incluidos los correos
+          console.log('Datos fiscales:', this.formData.datosFiscales);
           this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
+          //alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
         }
+        break;
+
+      case 3:
+        // Validación para el tercer paso (Confirmar datos)
+/*        /*if (this.confirmarDatosComponent?.isValid()) {
+          this.formData.confirmarDatos = this.confirmarDatosComponent.getData(); // Guarda los datos de confirmación
+          console.log('Datos confirmados:', this.formData.confirmarDatos);
+          this.currentStep++; // Avanza al siguiente paso
+        } else {
+          alert('Revisa y confirma los datos antes de continuar.'); // Muestra un mensaje de error
+        }*/
+        break;
+
+      case 4:
+        // Paso final (Facturas emitidas)
+        console.log('Proceso completado. Datos finales:', this.formData);
+        alert('¡Proceso completado con éxito!'); // Muestra un mensaje de éxito
+        this.router.navigate(['/inicio']); // Redirige al inicio
+        break;
+
+      default:
+        console.log('Paso no reconocido:', this.currentStep); // Manejo de errores para pasos no reconocidos
         break;
     }
   }

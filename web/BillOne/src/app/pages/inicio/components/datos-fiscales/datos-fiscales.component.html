@@ -6,7 +6,7 @@
   </div>
 
   <div class="mat-content-cent">
-    <mat-tab-group animationDuration="0ms" class="matgroup">
+    <mat-tab-group animationDuration="0ms" class="matgroup" (selectedTabChange)="onTabChange($event)">
       <mat-tab label="DATOS GENERALES">
         <p>
           La información ingresada debe ser la que contiene la constancia de situación fiscal: RFC de cliente / Nombre, denominación o razón social / Régimen fiscal / Código Postal
@@ -19,8 +19,23 @@
                 Lista de Tokens
               </mat-panel-title>
             </mat-expansion-panel-header>
-
-            <div *ngIf="tokens.length > 0; else noTokens">
+            <div class="token-header">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Concepto</th>
+                    <th>Precio</th>
+                    <th>Token</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div
+              *ngIf="tokens.length > 0; else noTokens"
+              class="token-list"
+              [ngClass]="{ 'two-tokens': tokens.length === 2 }"
+            >
               <div class="token-card" *ngFor="let token of tokens; let i = index">
                 <div class="token-row">
                   <div class="token-cell">{{ i + 1 }}</div>
@@ -41,72 +56,140 @@
         <form [formGroup]="form" class="form-grid">
           <mat-form-field appearance="outline">
             <mat-label>RFC</mat-label>
-            <input matInput formControlName="rfc" />
+            <input matInput formControlName="rfc" maxlength="13" placeholder="Ingrese el RFC" />
+            <mat-error *ngIf="form.get('rfc')?.hasError('required')">El RFC es obligatorio.</mat-error>
+            <mat-error *ngIf="form.get('rfc')?.hasError('pattern')">Ingrese un RFC válido.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
-            <input matInput formControlName="nombre" />
+            <input matInput formControlName="nombre" placeholder="Ingrese el nombre o razón social" />
+            <mat-error *ngIf="form.get('nombre')?.hasError('required')">El nombre es obligatorio.</mat-error>
+            <mat-error *ngIf="form.get('nombre')?.hasError('minlength')">El nombre debe tener al menos 3 caracteres.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Régimen</mat-label>
-            <input matInput formControlName="regimen" />
+            <mat-select formControlName="regimen">
+              <mat-option *ngFor="let regimen of regimenes" [value]="regimen.split(' - ')[0]">
+                {{ regimen }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('regimen')?.hasError('required')">El régimen es obligatorio.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Uso CFDI</mat-label>
-            <input matInput formControlName="usoCfdi" />
+            <mat-select formControlName="usoCfdi">
+              <mat-option *ngFor="let uso of usosCfdiFiltrados" [value]="uso">
+                {{ uso }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('usoCfdi')?.hasError('required')">El uso de CFDI es obligatorio.</mat-error>
           </mat-form-field>
 
+        
           <mat-form-field appearance="outline">
-            <mat-label>Correo</mat-label>
-            <input matInput type="email" formControlName="correo" />
+            <mat-label>Forma de Pago</mat-label>
+            <mat-select formControlName="formaPago">
+              <mat-option *ngFor="let forma of formasPago" [value]="forma">
+                {{ forma }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
+
 
           <mat-form-field appearance="outline">
             <mat-label>Código Postal</mat-label>
-            <input matInput formControlName="cp" />
+            <input matInput formControlName="cp" maxlength="5" placeholder="Ingrese el código postal" />
+            <mat-error *ngIf="form.get('cp')?.hasError('required')">El código postal es obligatorio.</mat-error>
+            <mat-error *ngIf="form.get('cp')?.hasError('pattern')">Ingrese un código postal válido (5 dígitos).</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Estado</mat-label>
-            <input matInput formControlName="estado" />
+            <mat-select formControlName="estado" (selectionChange)="onEstadoChange()">
+              <mat-option *ngFor="let estado of estados" [value]="estado">
+                {{ estado }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('estado')?.hasError('required')">El estado es obligatorio.</mat-error>
           </mat-form-field>
+          
 
           <mat-form-field appearance="outline">
             <mat-label>Ciudad</mat-label>
-            <input matInput formControlName="ciudad" />
+            <mat-select formControlName="ciudad">
+              <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad">
+                {{ ciudad }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('ciudad')?.hasError('required')">La ciudad es obligatoria.</mat-error>
           </mat-form-field>
+          
 
           <mat-form-field appearance="outline">
             <mat-label>Colonia</mat-label>
-            <input matInput formControlName="colonia" />
+            <input matInput formControlName="colonia" placeholder="Ingrese la colonia" />
+            <mat-error *ngIf="form.get('colonia')?.hasError('required')">La colonia es obligatoria.</mat-error>
+            <mat-error *ngIf="form.get('colonia')?.hasError('minlength')">La colonia debe tener al menos 3 caracteres.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Calle</mat-label>
-            <input matInput formControlName="calle" />
+            <input matInput formControlName="calle" placeholder="Ingrese la calle" />
+            <mat-error *ngIf="form.get('calle')?.hasError('required')">La calle es obligatoria.</mat-error>
+            <mat-error *ngIf="form.get('calle')?.hasError('minlength')">La calle debe tener al menos 3 caracteres.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Número Exterior</mat-label>
-            <input matInput formControlName="numExt" />
+            <input matInput formControlName="numExt" placeholder="Ingrese el número exterior" />
+            <mat-error *ngIf="form.get('numExt')?.hasError('required')">El número exterior es obligatorio.</mat-error>
+            <mat-error *ngIf="form.get('numExt')?.hasError('pattern')">Ingrese solo números.</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Número Interior</mat-label>
-            <input matInput formControlName="numInt" />
+            <input matInput formControlName="numInt" placeholder="Ingrese el número interior (opcional)" />
+            <mat-error *ngIf="form.get('numInt')?.hasError('pattern')">Ingrese solo números.</mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Forma de Pago</mat-label>
-            <input matInput formControlName="formaPago" />
+          <mat-form-field class="example-form-field" appearance="outline">
+            <mat-label>Correo electrónico (Máximo 3)*</mat-label>
+            <mat-chip-grid #reactiveChipGrid aria-label="Lista de correos">
+              <mat-chip-row
+                *ngFor="let correo of correos"
+                [selectable]="false"
+                [removable]="true"
+                (removed)="eliminarCorreo(correo)"
+              >
+                {{ correo }}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip-row>
+              <input
+                matInput
+                [formControl]="correoInput"
+                [matChipInputFor]="reactiveChipGrid"
+                [matChipInputSeparatorKeyCodes]="separadores"
+                [matChipInputAddOnBlur]="true"
+                (matChipInputTokenEnd)="agregarCorreo($event)"
+                placeholder="Ingrese un correo y presione Enter"
+                [disabled]="correos.length >= 3"
+              />
+            </mat-chip-grid>
+            <!-- Mensaje de error si no hay correos -->
+            <mat-error *ngIf="correoInput.hasError('required')">
+              Debe ingresar al menos un correo electrónico.
+            </mat-error>
+            <mat-error *ngIf="correoInput.hasError('email')">
+              Ingrese un correo electrónico válido.
+            </mat-error>
           </mat-form-field>
         </form>
       </mat-tab>
       <mat-tab label="COMPLEMENTO INE">
-        <p>Contenido adicional para la segunda pestaña.</p>
+        <p>Complemento INE.</p>
       </mat-tab>
     </mat-tab-group>
   </div>

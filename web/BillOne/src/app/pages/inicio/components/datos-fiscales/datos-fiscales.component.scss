@@ -96,7 +96,7 @@ margin-bottom: 20PX;
 
   .token-row {
     display: grid;
-    grid-template-columns: 5% 55% 15% 15%; // Ajusta las proporciones de las columnas
+    grid-template-columns: 5% 55% 15% 25%; // Ajusta las proporciones de las columnas
     width: 100%;
     align-items: center;
 
@@ -111,6 +111,42 @@ margin-bottom: 20PX;
   }
 }
 
+.token-list {
+  max-height: 200px; // Altura máxima del contenedor
+  overflow-y: auto; // Habilita el desplazamiento vertical si el contenido excede la altura
+  margin-bottom: 20px; // Espacio entre la lista y el contenido siguiente
+
+  &.two-tokens {
+    padding-right: 10px;
+  }
+}
+
+.token-header{
+  width: 100%;
+  display: grid;
+  padding: 10px;
+  padding-right: 20px;
+
+  table{
+    /* Ajusta el ancho de las columnas */
+    th:nth-child(1), td:nth-child(1) {
+      width: 5%; // Columna de número (#)
+    }
+
+    th:nth-child(2), td:nth-child(2) {
+      width: 55%; // Columna de Concepto (más grande)
+    }
+
+    th:nth-child(3), td:nth-child(3) {
+      width: 15%; // Columna de Precio
+    }
+
+    th:nth-child(4), td:nth-child(4) {
+      width: 25%; // Columna de Token
+    }
+  }
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr; // Dos columnas iguales
@@ -120,4 +156,18 @@ margin-bottom: 20PX;
   mat-form-field {
     width: 100%; // Asegura que los campos ocupen todo el ancho disponible
   }
+}
+
+.email-chips {
+  width: 100%;
+}
+
+mat-chip {
+  margin: 5px;
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+mat-chip mat-icon {
+  color: #004d40;
 }

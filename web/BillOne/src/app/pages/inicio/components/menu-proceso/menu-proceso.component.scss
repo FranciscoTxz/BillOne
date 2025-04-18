@@ -204,12 +204,12 @@
   transition: all 0.3s ease; // Transición suave para los cambios de estilo
 
   &.expanded {
-    height: 125vh; // Altura expandida
+    height: 127vh; // Altura expandida
     min-height: 100vh; // Establece una altura mínima para evitar que sea demasiado pequeño
   }
 
   &.accordion-expanded {
-    height: 145vh; // Altura expandida
+    height: 155vh; // Altura expandida
   }
 
   .btn-first,
