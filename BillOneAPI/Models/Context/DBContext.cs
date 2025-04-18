@@ -10,4 +10,8 @@ public class BillOneContext : DbContext
     public DbSet<Usuario> Usuarios { get; set; } = null!;
     public DbSet<Factura> Facturas { get; set; } = null!;
     public DbSet<HistorialFactura> HistorialFacturas { get; set; } = null!;
+    public DbSet<TokenE> Tokens { get; set; } = null!;
+
+    public DbSet<Emisor> Emisores { get; set; } = null!;
+
 }
