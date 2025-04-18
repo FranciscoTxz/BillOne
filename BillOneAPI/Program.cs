@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+/* if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 {
     Console.WriteLine("Estamos en Windows");
     // WINDOWS Db
@@ -27,7 +27,13 @@ else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
 else
 {
     Console.WriteLine("Otro sistema operativo");
-}
+} */
+
+// DB AWS Connection
+builder.Services.AddDbContext<BillOneContext>(options =>
+        options.UseMySql(builder.Configuration.GetConnectionString("BillOneAWS"),
+            new MySqlServerVersion(new Version(8, 4, 4))
+            ));
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<EmailService>();
