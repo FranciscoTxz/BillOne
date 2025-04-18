@@ -46,6 +46,12 @@ export class ChatService {
       max_tokens: 350
     };
 
+    if(!this.apiKey) {
+      console.log('API key is not set. Please check your environment configuration.');
+      
+    }
+
+
     return this.http.post<ChatResponse>(this.apiUrl, body, { headers });
   }
 }
