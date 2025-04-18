@@ -11,6 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2.component";
 
+interface Token {
+  concepto: string;
+  precio: number;
+  token: string;
+}
+
 // Decorador del componente
 @Component({
   selector: 'app-menu-proceso', // Selector del componente
@@ -35,10 +41,13 @@ export class MenuProcesoComponent {
   currentStep: number = 1; // Controla el paso actual del proceso principal
   currentStepDatosServicio: number = 1; // Controla el paso actual dentro del proceso de datos de servicio
   showModal: boolean = false; // Controla la visibilidad del modal
+  isAccordionExpanded: boolean = false; // Estado del acordeón
 
   // Objeto para almacenar los datos del cliente en diferentes pasos
   formData = {
-    datosServicio: {}, // Datos del servicio
+    datosServicio: {
+      tokens: [] as Token[] // Define el tipo del array como Token[]
+    },
     datosFiscales: {}, // Datos fiscales
     confirmarDatos: {} // Datos de confirmación
   };
@@ -76,7 +85,8 @@ export class MenuProcesoComponent {
       const isCheckboxChecked = this.datosServicioP2Component?.form.get('aceptaAviso')?.value; // Verifica si el checkbox está seleccionado
 
       if (hasTokens && isCheckboxChecked) {
-        console.log('Tokens registrados:', this.datosServicioP2Component.tokens); // Muestra los tokens registrados
+        this.formData.datosServicio.tokens = this.datosServicioP2Component.tokens; // Guarda los tokens en los datos del formulario
+        console.log('Tokens registrados:', this.formData.datosServicio.tokens); // Muestra los tokens registrados
         this.currentStep++; // Avanza al siguiente paso general
       } else {
         if (!hasTokens) {
@@ -131,5 +141,13 @@ export class MenuProcesoComponent {
     this.currentStep = 1; // Regresa al primer paso
     this.currentStepDatosServicio = 1; // Regresa al primer subpaso dentro del proceso de datos de servicio
     this.router.navigate(['/inicio']); // Redirige al inicio
+  }
+
+  get tokens(): any[] {
+    return this.formData.datosServicio.tokens || [];
+  }
+
+  onAccordionStateChange(isExpanded: boolean): void {
+    this.isAccordionExpanded = isExpanded; // Actualiza el estado del acordeón
   }
 }

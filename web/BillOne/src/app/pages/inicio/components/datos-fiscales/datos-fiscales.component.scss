@@ -1,0 +1,123 @@
+.mat-tab-content {
+    margin: 0 auto;
+    padding: 0%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-content-cent{
+    margin: 0 auto;
+    width: 90%;
+}
+
+mat-tab-header {
+  justify-content: center; // Centra las etiquetas de las pestañas
+}
+
+mat-tab-label {
+  text-align: center; // Centra el texto dentro de cada etiqueta
+  font-weight: bold; // Opcional: hace que el texto sea más destacado
+}
+
+mat-tab {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    color: #666;
+  }
+
+h2 {
+    font-size: 24px;
+    font-weight: 300;
+    color: #444;
+    margin-bottom: 1rem;
+    padding: 20px 0px 0px 30px;
+  }
+
+mat-accordion {
+  margin-top: 20px;
+  margin-bottom: 20px; // Espacio entre el acordeón y el contenido siguiente
+}
+
+mat-expansion-panel {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 30px;
+}
+
+mat-panel-title {
+
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.mat-content-cent p {
+  font-size: 1rem;
+  margin: 0;
+  padding: 0%;
+  color: #666;
+  margin-top: 20px;
+margin-bottom: 20PX;
+}
+
+.token-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+
+  p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #333;
+  }
+}
+
+.token-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #ececece1;
+  margin-bottom: 10px; // Espacio entre las tarjetas
+
+  .token-row {
+    display: grid;
+    grid-template-columns: 5% 55% 15% 15%; // Ajusta las proporciones de las columnas
+    width: 100%;
+    align-items: center;
+
+    .token-cell {
+      padding: 10px;
+      text-align: center; // Centra el texto en las celdas
+
+      &:last-child {
+        border-right: none; // Elimina el borde derecho de la última celda
+      }
+    }
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; // Dos columnas iguales
+  gap: 20px; // Espaciado entre los campos
+  margin-top: 20px;
+
+  mat-form-field {
+    width: 100%; // Asegura que los campos ocupen todo el ancho disponible
+  }
+}

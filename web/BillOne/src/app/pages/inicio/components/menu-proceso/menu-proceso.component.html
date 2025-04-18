@@ -38,16 +38,21 @@
 </div>
 
 <!-- Contenido dinámico según el paso actual -->
-<div class="content content-process">
+<div
+  class="content content-process"
+  [ngClass]="{
+    'expanded': currentStep === 2 && !isAccordionExpanded,
+    'accordion-expanded': currentStep === 2 && isAccordionExpanded
+  }"
+>
   <ng-container *ngIf="currentStep === 1">
+    <ng-container *ngIf="currentStepDatosServicio === 1">
+      <app-datos-servicio class="comp-datos"></app-datos-servicio>
+      <button mat-fab extended class="custom-button btn-first" (click)="nextStepDatosServicio()">
+        CONTINUAR
+      </button>
+    </ng-container>
 
-      <ng-container *ngIf="currentStepDatosServicio === 1">
-        <app-datos-servicio class="comp-datos"></app-datos-servicio>
-        <button mat-fab extended class="custom-button btn-first" (click)="nextStepDatosServicio()">
-          CONTINUAR
-        </button>
-      </ng-container>
-    
     <ng-container *ngIf="currentStepDatosServicio === 2">
       <app-datos-servicio-p2 class="comp-datos"></app-datos-servicio-p2>
       <div class="actions-row">
@@ -56,16 +61,24 @@
         </button>
       </div>
     </ng-container>
+  </ng-container>
 
-  </ng-container>
   <ng-container *ngIf="currentStep === 2">
-    <app-datos-fiscales></app-datos-fiscales>
-    <button (click)="nextStep()">Seguir</button>
+    <app-datos-fiscales
+      [tokens]="tokens"
+      class="comp-datos"
+      (accordionStateChange)="onAccordionStateChange($event)"
+    ></app-datos-fiscales>
+    <button mat-fab extended class="custom-button btn-first" (click)="nextStep()">
+      CONFIRMAR DATOS
+    </button>
   </ng-container>
+
   <ng-container *ngIf="currentStep === 3">
     <app-confirmar-datos></app-confirmar-datos>
     <button (click)="nextStep()">Seguir</button>
   </ng-container>
+
   <ng-container *ngIf="currentStep === 4">
     <app-facturas-emitidas></app-facturas-emitidas>
     <button (click)="nextStep()">Seguir</button>

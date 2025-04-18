@@ -1,23 +1,113 @@
-<form [formGroup]="form">
-    <label>
-      Nombre del servicio:
-      <input type="text" formControlName="nombreServicio" />
-      <div *ngIf="form.get('nombreServicio')?.invalid && form.get('nombreServicio')?.touched">
-        Campo obligatorio.
-      </div>
-    </label>
-  
-    <label>
-      Descripción:
-      <input type="text" formControlName="descripcion" />
-    </label>
-  
-    <label>
-      Fecha:
-      <input type="date" formControlName="fecha" />
-      <div *ngIf="form.get('fecha')?.invalid && form.get('fecha')?.touched">
-        Fecha requerida.
-      </div>
-    </label>
-  </form>
-  
+<div class="mat-tab-content">
+  <div>
+    <!-- Título y subtítulo -->
+    <h2 class="title">Facturación</h2>
+    <p class="subtitle">Ingrese los datos fiscales para elaborar su factura</p>
+  </div>
+
+  <div class="mat-content-cent">
+    <mat-tab-group animationDuration="0ms" class="matgroup">
+      <mat-tab label="DATOS GENERALES">
+        <p>
+          La información ingresada debe ser la que contiene la constancia de situación fiscal: RFC de cliente / Nombre, denominación o razón social / Régimen fiscal / Código Postal
+        </p>
+
+        <mat-accordion>
+          <mat-expansion-panel (opened)="onAccordionOpened()" (closed)="onAccordionClosed()">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Lista de Tokens
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div *ngIf="tokens.length > 0; else noTokens">
+              <div class="token-card" *ngFor="let token of tokens; let i = index">
+                <div class="token-row">
+                  <div class="token-cell">{{ i + 1 }}</div>
+                  <div class="token-cell">{{ token.concepto }}</div>
+                  <div class="token-cell">{{ token.precio | currency }}</div>
+                  <div class="token-cell">{{ token.token }}</div>
+                </div>
+              </div>
+            </div>
+
+            <ng-template #noTokens>
+              <p>No hay tokens registrados.</p>
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <!-- Formulario -->
+        <form [formGroup]="form" class="form-grid">
+          <mat-form-field appearance="outline">
+            <mat-label>RFC</mat-label>
+            <input matInput formControlName="rfc" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Régimen</mat-label>
+            <input matInput formControlName="regimen" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Uso CFDI</mat-label>
+            <input matInput formControlName="usoCfdi" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Correo</mat-label>
+            <input matInput type="email" formControlName="correo" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Código Postal</mat-label>
+            <input matInput formControlName="cp" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Estado</mat-label>
+            <input matInput formControlName="estado" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Ciudad</mat-label>
+            <input matInput formControlName="ciudad" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Colonia</mat-label>
+            <input matInput formControlName="colonia" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Calle</mat-label>
+            <input matInput formControlName="calle" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Número Exterior</mat-label>
+            <input matInput formControlName="numExt" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Número Interior</mat-label>
+            <input matInput formControlName="numInt" />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Forma de Pago</mat-label>
+            <input matInput formControlName="formaPago" />
+          </mat-form-field>
+        </form>
+      </mat-tab>
+      <mat-tab label="COMPLEMENTO INE">
+        <p>Contenido adicional para la segunda pestaña.</p>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
