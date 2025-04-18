@@ -28,7 +28,7 @@ export interface ChatResponse {
 })
 export class ChatService {
   private apiUrl = 'https://api.deepseek.com/v1/chat/completions';
-  private apiKey = 'sk-32d2c0023b38472fb04afdc7a5b31614';
+  private  apiKey = process.env['API_KEY'];
 
   constructor(private http: HttpClient) {}
 
