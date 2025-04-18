@@ -30,8 +30,11 @@ export interface ChatResponse {
 export class ChatService {
   private apiUrl = environment.deepseekApiUrl;
   private apiKey = environment.deepseekApiKey;
+  
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.apiKey = "sk-4adc1f91f9e241d995c65009c593d5df";
+  }
 
   sendMessage(messages: ChatMessage[]): Observable<ChatResponse> {
     const headers = new HttpHeaders({
@@ -45,13 +48,6 @@ export class ChatService {
       temperature: 1.3,
       max_tokens: 350
     };
-
-    if(!this.apiKey) {
-      console.log('API key is not set. Please check your environment configuration.');
-      
-    }
-
-    console.log(this.apiKey);
 
     return this.http.post<ChatResponse>(this.apiUrl, body, { headers });
   }
