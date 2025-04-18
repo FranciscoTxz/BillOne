@@ -1,0 +1,10 @@
+{
+  "routes": [
+    "/",
+    "/aviso-privacidad",
+    "/contacto",
+    "/facturar",
+    "/faq",
+    "/gfa"
+  ]
+}
