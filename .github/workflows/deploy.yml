@@ -17,17 +17,11 @@ jobs:
         with:
           dotnet-version: '9.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore ./BillOneAPI/BillOneAPI.csproj
-
-      - name: Build
-        run: dotnet build ./BillOneAPI/BillOneAPI.csproj --configuration Release
-
-      - name: Publish
-        run: dotnet publish ./BillOneAPI/BillOneAPI.csproj -c Release -o ./publish
-
-      - name: Zip published output
-        run: zip -r app.zip ./publish
+      - name: Publish .NET project (self-contained)
+        run: |
+          dotnet publish ./BillOneAPI/BillOneAPI.csproj -c Release -r linux-x64 --self-contained true -o ./app/publish
+          cd ./app/publish
+          zip -r ../../app.zip .
 
       - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v21
