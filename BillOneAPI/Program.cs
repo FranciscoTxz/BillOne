@@ -41,7 +41,7 @@ builder.Services.AddScoped<PdfService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
-
+builder.Services.AddHttpClient("Facturama"); // Registra un HttpClient con nombre
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
