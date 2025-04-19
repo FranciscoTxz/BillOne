@@ -238,6 +238,10 @@
   }
 }
 
+.confirmar-datos-style {
+  height: 132vh; // Altura expandida
+}
+
 // Media queries para responsividad
 @media (max-width: 768px) {
   .content-process {

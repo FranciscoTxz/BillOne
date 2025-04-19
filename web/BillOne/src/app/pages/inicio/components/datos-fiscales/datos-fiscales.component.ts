@@ -225,7 +225,8 @@ export class DatosFiscalesComponent implements OnInit {
         calle: this.form.get('calle')?.value,
         numExt: this.form.get('numExt')?.value,
         numInt: this.form.get('numInt')?.value, // Opcional
-        correos: this.correos // Incluye los correos electrónicos
+        correos: this.correos, // Incluye los correos electrónicos
+        formaPago: this.form.get('formaPago')?.value // Incluye la forma de pago seleccionada
       };
     } else if (this.activeTab === 'COMPLEMENTO INE') {
       return {

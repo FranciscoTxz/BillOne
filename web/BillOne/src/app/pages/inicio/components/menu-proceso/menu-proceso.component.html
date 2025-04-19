@@ -42,7 +42,8 @@
   class="content content-process"
   [ngClass]="{
     'expanded': currentStep === 2 && !isAccordionExpanded,
-    'accordion-expanded': currentStep === 2 && isAccordionExpanded
+    'accordion-expanded': currentStep === 2 && isAccordionExpanded,
+    'confirmar-datos-style': currentStep === 3
   }"
 >
   <ng-container *ngIf="currentStep === 1">
@@ -75,13 +76,21 @@
   </ng-container>
 
   <ng-container *ngIf="currentStep === 3">
-    <app-confirmar-datos></app-confirmar-datos>
-    <button (click)="nextStep()">Seguir</button>
+    <app-confirmar-datos
+      [datosFiscales]="formData.datosFiscales"
+      class="comp-datos"
+      [tokens]="tokens"
+    ></app-confirmar-datos>
+    <button mat-fab extended class="custom-button btn-first" (click)="nextStep()">
+      GENERAR FACTURA
+    </button>
   </ng-container>
 
   <ng-container *ngIf="currentStep === 4">
-    <app-facturas-emitidas></app-facturas-emitidas>
-    <button (click)="nextStep()">Seguir</button>
+    <app-facturas-emitidas class="comp-datos"></app-facturas-emitidas>
+    <button mat-fab extended class="custom-button btn-first" (click)="nextStep()">
+      SALIR
+    </button>
   </ng-container>
 </div>
 

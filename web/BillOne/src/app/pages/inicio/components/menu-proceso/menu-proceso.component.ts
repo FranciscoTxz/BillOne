@@ -60,7 +60,8 @@ export class MenuProcesoComponent {
       calle: '',
       numExt: '',
       numInt: '',
-      correos: [] as string[] // Agrega un campo para los correos electrónicos
+      correos: [] as string[], // Agrega un campo para los correos electrónicos
+      formaPago: '' // Agrega un campo para la forma de pago
     },
     confirmarDatos: {} // Datos de confirmación
   };
@@ -138,6 +139,7 @@ export class MenuProcesoComponent {
         break;
 
       case 3:
+        this.currentStep++;
         // Validación para el tercer paso (Confirmar datos)
 /*        /*if (this.confirmarDatosComponent?.isValid()) {
           this.formData.confirmarDatos = this.confirmarDatosComponent.getData(); // Guarda los datos de confirmación
