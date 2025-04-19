@@ -1,5 +1,8 @@
 <!-- navbar.component.html -->
 <nav>
+  <!-- Fondo oscuro (overlay) -->
+  <div class="overlay" *ngIf="menuOpen" (click)="closeMenu()"></div>
+
   <div class="hamburger" (click)="toggleMenu()">
     <span></span>
     <span></span>
@@ -9,10 +12,10 @@
     <img src="https://www.facturaelectronicagfa.mx/assets/img/logo.png" alt="Logo de la página" />
   </div>
   <ul [class.active]="menuOpen">
-    <a routerLink="/"><li>INICIO</li></a>
-    <a routerLink="/aviso-privacidad"><li>AVISO DE PRIVACIDAD</li></a>
-    <a routerLink="/faq"><li>PREGUNTAS FRECUENTES</li></a>
-    <a routerLink="/contacto"><li>CONTACTO</li></a>
-    <a routerLink="/gfa"><li>CONECTA GFA</li></a>
+    <a routerLink="/" (click)="closeMenu()"><li>INICIO</li></a>
+    <a routerLink="/aviso-privacidad" (click)="closeMenu()"><li>AVISO DE PRIVACIDAD</li></a>
+    <a routerLink="/faq" (click)="closeMenu()"><li>PREGUNTAS FRECUENTES</li></a>
+    <a routerLink="/contacto" (click)="closeMenu()"><li>CONTACTO</li></a>
+    <a routerLink="/gfa" (click)="closeMenu()"><li>CONECTA GFA</li></a>
   </ul>
 </nav>

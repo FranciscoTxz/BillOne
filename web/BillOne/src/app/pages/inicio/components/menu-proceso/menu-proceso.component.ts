@@ -13,6 +13,12 @@ import { DatosServicioP2Component } from "../datos-servicio-p2/datos-servicio-p2
 import { HttpClientModule } from '@angular/common/http';
 import { ChatComponent } from '../../../chat-component/chat-component.component';
 
+interface Token {
+  concepto: string;
+  precio: number;
+  token: string;
+}
+
 // Decorador del componente
 @Component({
   selector: 'app-menu-proceso', // Selector del componente
@@ -39,12 +45,29 @@ export class MenuProcesoComponent {
   currentStep: number = 1; // Controla el paso actual del proceso principal
   currentStepDatosServicio: number = 1; // Controla el paso actual dentro del proceso de datos de servicio
   showModal: boolean = false; // Controla la visibilidad del modal
+  isAccordionExpanded: boolean = false; // Estado del acordeón
   isChatVisible = false; // Controla la visibilidad del chat
 
   // Objeto para almacenar los datos del cliente en diferentes pasos
   formData = {
-    datosServicio: {}, // Datos del servicio
-    datosFiscales: {}, // Datos fiscales
+    datosServicio: {
+      tokens: [] as Token[] // Define el tipo del array como Token[]
+    },
+    datosFiscales: {
+      rfc: '',
+      nombre: '',
+      regimen: '',
+      usoCfdi: '',
+      cp: '',
+      estado: '',
+      ciudad: '',
+      colonia: '',
+      calle: '',
+      numExt: '',
+      numInt: '',
+      correos: [] as string[], // Agrega un campo para los correos electrónicos
+      formaPago: '' // Agrega un campo para la forma de pago
+    },
     confirmarDatos: {} // Datos de confirmación
   };
 
@@ -91,7 +114,8 @@ export class MenuProcesoComponent {
       const isCheckboxChecked = this.datosServicioP2Component?.form.get('aceptaAviso')?.value; // Verifica si el checkbox está seleccionado
 
       if (hasTokens && isCheckboxChecked) {
-        console.log('Tokens registrados:', this.datosServicioP2Component.tokens); // Muestra los tokens registrados
+        this.formData.datosServicio.tokens = this.datosServicioP2Component.tokens; // Guarda los tokens en los datos del formulario
+        console.log('Tokens registrados:', this.formData.datosServicio.tokens); // Muestra los tokens registrados
         this.currentStep++; // Avanza al siguiente paso general
       } else {
         if (!hasTokens) {
@@ -111,21 +135,45 @@ export class MenuProcesoComponent {
         // Validación para el primer paso
         if (this.datosServicioComponent?.isValid()) {
           this.formData.datosServicio = this.datosServicioComponent.getData(); // Guarda los datos del servicio
-          console.log(this.formData);
+          console.log('Datos del servicio:', this.formData.datosServicio);
           this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
+          alert('Completa correctamente los datos del servicio.'); // Muestra un mensaje de error
         }
         break;
 
       case 2:
         // Validación para el segundo paso
         if (this.datosFiscalesComponent?.isValid()) {
-          this.formData.datosFiscales = this.datosFiscalesComponent.getData(); // Guarda los datos fiscales
+          this.formData.datosFiscales = this.datosFiscalesComponent.getData(); // Guarda los datos fiscales, incluidos los correos
+          console.log('Datos fiscales:', this.formData.datosFiscales);
           this.currentStep++; // Avanza al siguiente paso
         } else {
-          alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
+          //alert('Completa correctamente los datos fiscales.'); // Muestra un mensaje de error
         }
+        break;
+
+      case 3:
+        this.currentStep++;
+        // Validación para el tercer paso (Confirmar datos)
+/*        /*if (this.confirmarDatosComponent?.isValid()) {
+          this.formData.confirmarDatos = this.confirmarDatosComponent.getData(); // Guarda los datos de confirmación
+          console.log('Datos confirmados:', this.formData.confirmarDatos);
+          this.currentStep++; // Avanza al siguiente paso
+        } else {
+          alert('Revisa y confirma los datos antes de continuar.'); // Muestra un mensaje de error
+        }*/
+        break;
+
+      case 4:
+        // Paso final (Facturas emitidas)
+        console.log('Proceso completado. Datos finales:', this.formData);
+        alert('¡Proceso completado con éxito!'); // Muestra un mensaje de éxito
+        this.router.navigate(['/inicio']); // Redirige al inicio
+        break;
+
+      default:
+        console.log('Paso no reconocido:', this.currentStep); // Manejo de errores para pasos no reconocidos
         break;
     }
   }
@@ -146,5 +194,13 @@ export class MenuProcesoComponent {
     this.currentStep = 1; // Regresa al primer paso
     this.currentStepDatosServicio = 1; // Regresa al primer subpaso dentro del proceso de datos de servicio
     this.router.navigate(['/inicio']); // Redirige al inicio
+  }
+
+  get tokens(): any[] {
+    return this.formData.datosServicio.tokens || [];
+  }
+
+  onAccordionStateChange(isExpanded: boolean): void {
+    this.isAccordionExpanded = isExpanded; // Actualiza el estado del acordeón
   }
 }

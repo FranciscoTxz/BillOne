@@ -198,8 +198,19 @@
   padding: 10px 0;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  height: 70vh;
+  height: 70vh; // Altura predeterminada
   position: relative;
+  transition: height 0.3s ease; // Transición suave al cambiar la altura
+  transition: all 0.3s ease; // Transición suave para los cambios de estilo
+
+  &.expanded {
+    height: 127vh; // Altura expandida
+    min-height: 100vh; // Establece una altura mínima para evitar que sea demasiado pequeño
+  }
+
+  &.accordion-expanded {
+    height: 155vh; // Altura expandida
+  }
 
   .btn-first,
   .btn-second {
@@ -225,6 +236,10 @@
     width: 100%;
     height: 100%;
   }
+}
+
+.confirmar-datos-style {
+  height: 132vh; // Altura expandida
 }
 
 // Media queries para responsividad

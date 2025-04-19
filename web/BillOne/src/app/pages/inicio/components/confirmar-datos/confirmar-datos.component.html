@@ -1,1 +1,123 @@
-<p>confirmar-datos works!</p>
+<div class="mat-tab-content">
+  <div>
+    <h2 class="title">Confirmar Datos</h2>
+    <p class="subtitle">Revise y confirme los datos ingresados antes de continuar</p>
+  </div>
+
+  <div class="mat-content-cent">
+    <mat-tab-group animationDuration="0ms" class="matgroup">
+      <!-- Tab de Información Ingresada -->
+      <mat-tab label="DATOS CLIENTE">
+        <div class="form-grid">
+          <!-- RFC -->
+          <div class="field">
+            <label class="field-label">RFC:</label>
+            <span class="field-value">{{ datosFiscales.rfc }}</span>
+          </div>
+
+          <!-- Nombre -->
+          <div class="field">
+            <label class="field-label">Nombre:</label>
+            <span class="field-value">{{ datosFiscales.nombre }}</span>
+          </div>
+
+          <!-- Régimen -->
+          <div class="field">
+            <label class="field-label">Régimen:</label>
+            <span class="field-value">{{ datosFiscales.regimen }}</span>
+          </div>
+
+          <!-- Uso CFDI -->
+          <div class="field">
+            <label class="field-label">Uso CFDI:</label>
+            <span class="field-value">{{ datosFiscales.usoCfdi }}</span>
+          </div>
+
+          <!-- Forma de Pago -->
+          <div class="field">
+            <label class="field-label">Forma de Pago:</label>
+            <span class="field-value">{{ datosFiscales.formaPago }}</span>
+          </div>
+
+          <!-- Código Postal -->
+          <div class="field">
+            <label class="field-label">Código Postal:</label>
+            <span class="field-value">{{ datosFiscales.cp }}</span>
+          </div>
+
+          <!-- Estado -->
+          <div class="field">
+            <label class="field-label">Estado:</label>
+            <span class="field-value">{{ datosFiscales.estado }}</span>
+          </div>
+
+          <!-- Ciudad -->
+          <div class="field">
+            <label class="field-label">Ciudad:</label>
+            <span class="field-value">{{ datosFiscales.ciudad }}</span>
+          </div>
+
+          <!-- Colonia -->
+          <div class="field">
+            <label class="field-label">Colonia:</label>
+            <span class="field-value">{{ datosFiscales.colonia }}</span>
+          </div>
+
+          <!-- Calle -->
+          <div class="field">
+            <label class="field-label">Calle:</label>
+            <span class="field-value">{{ datosFiscales.calle }}</span>
+          </div>
+
+          <!-- Número Exterior -->
+          <div class="field">
+            <label class="field-label">Número Exterior:</label>
+            <span class="field-value">{{ datosFiscales.numExt }}</span>
+          </div>
+
+          <!-- Número Interior -->
+          <div class="field">
+            <label class="field-label">Número Interior:</label>
+            <span class="field-value">{{ datosFiscales.numInt || 'N/A' }}</span>
+          </div>
+
+          <!-- Correos -->
+          <div class="field">
+            <label class="field-label">Correos Electrónicos:</label>
+            <div class="chip-container">
+              <mat-chip *ngFor="let correo of datosFiscales.correos" color="primary">
+                {{ correo }}
+              </mat-chip>
+            </div>
+          </div>
+        </div>
+        <div class="token-section">
+          <h3>Lista de Tokens</h3>
+
+          <!-- Encabezados de las columnas -->
+          <div
+            class="token-header"
+            [ngClass]="{ 'token-header-expanded': tokens.length > 3 }"
+          >
+            <div class="token-header-cell">#</div>
+            <div class="token-header-cell">Concepto</div>
+            <div class="token-header-cell">Precio</div>
+            <div class="token-header-cell">Token</div>
+          </div>
+
+          <!-- Lista de tokens -->
+          <div class="token-list">
+            <div class="token-card" *ngFor="let token of tokens; let i = index">
+              <div class="token-row">
+                <div class="token-cell">{{ i + 1 }}</div>
+                <div class="token-cell">{{ token.concepto }}</div>
+                <div class="token-cell">{{ token.precio | currency }}</div>
+                <div class="token-cell">{{ token.token }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

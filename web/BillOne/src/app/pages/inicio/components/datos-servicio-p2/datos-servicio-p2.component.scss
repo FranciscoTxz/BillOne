@@ -160,8 +160,9 @@ mat-checkbox {
 }
 
 .separador {
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd; // Línea separadora
 }
 
 .lista-tokens {
@@ -171,25 +172,102 @@ mat-checkbox {
   padding: 10px;
   overflow-y: auto; // Habilita el desplazamiento vertical si hay demasiados elementos
 
-  .token-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  table {
+    width: 100%;
+    border-collapse: collapse; // Elimina los espacios entre bordes
+    text-align: left;
 
-    p {
-      margin: 0;
-      font-size: 1rem;
-      color: #333;
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd; // Bordes de las celdas
+    }
+
+    th {
+      background-color: #f5f5f5; // Fondo gris claro para encabezados
+      font-weight: bold;
+      text-align: center; // Centra el texto en los encabezados
+    }
+
+    td {
+      text-align: center; // Centra el texto en las celdas
+    }
+
+    /* Ajusta el ancho de las columnas */
+    th:nth-child(1), td:nth-child(1) {
+      width: 5%; // Columna de número (#)
+    }
+
+    th:nth-child(2), td:nth-child(2) {
+      width: 50%; // Columna de Concepto (más grande)
+    }
+
+    th:nth-child(3), td:nth-child(3) {
+      width: 15%; // Columna de Precio
+    }
+
+    th:nth-child(4), td:nth-child(4) {
+      width: 20%; // Columna de Token
+    }
+
+    th:nth-child(5), td:nth-child(5) {
+      width: 10%; // Columna de Acciones
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9; // Fondo alterno para filas pares
+    }
+
+    tr:hover {
+      background-color: #f1f1f1; // Fondo al pasar el mouse
     }
 
     button {
-      color: #d9534f;
+      cursor: pointer;
+      color: #d9534f; // Color rojo para el botón de eliminar
+      transition: color 0.3s;
+
+      &:hover {
+        color: #a94442; // Rojo más oscuro al pasar el mouse
+      }
+    }
+  }
+
+  .token-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    border: 1px solid #ddd; // Bordes de las tarjetas
+    background-color: #fff;
+    
+
+    .token-row {
+      display: grid;
+      grid-template-columns: 5% 50% 15% 20% 10%; // Ajusta las proporciones de las columnas
+      width: 100%;
+      align-items: center;
+
+      .token-cell {
+        padding: 10px;
+        text-align: center; // Centra el texto en las celdas
+        border-right: 1px solid #ddd; // Bordes entre las celdas
+
+        &:last-child {
+          border-right: none; // Elimina el borde derecho de la última celda
+        }
+      }
+
+      button {
+        cursor: pointer;
+        color: #d9534f; // Color rojo para el botón de eliminar
+        transition: color 0.3s;
+
+        &:hover {
+          color: #a94442; // Rojo más oscuro al pasar el mouse
+        }
+      }
     }
   }
 }

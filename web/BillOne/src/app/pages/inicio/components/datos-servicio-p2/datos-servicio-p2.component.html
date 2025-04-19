@@ -51,13 +51,34 @@
 
     <hr class="separador">
 
-    <!-- Lista de tokens -->
+    <!-- Lista de tokens con encabezados como tabla y tokens como cards -->
     <div class="lista-tokens">
-      <div class="token-card" *ngFor="let token of tokens">
-        <p>{{ token }}</p>
-        <button mat-icon-button color="warn" (click)="removeToken(token)">
-          <mat-icon>delete</mat-icon>
-        </button>
+      <!-- Encabezados de la tabla -->
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Concepto</th>
+            <th>Precio</th>
+            <th>Token</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+      </table>
+
+      <!-- Tokens como tarjetas horizontales -->
+      <div class="token-card" *ngFor="let token of tokens; let i = index">
+        <div class="token-row">
+          <div class="token-cell">{{ i + 1 }}</div>
+          <div class="token-cell">{{ token.concepto }}</div>
+          <div class="token-cell">{{ token.precio | currency }}</div>
+          <div class="token-cell">{{ token.token }}</div>
+          <div class="token-cell">
+            <button mat-icon-button color="warn" (click)="removeToken(token)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 

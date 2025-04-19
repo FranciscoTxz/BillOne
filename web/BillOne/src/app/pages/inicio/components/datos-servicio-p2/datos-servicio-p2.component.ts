@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -9,6 +9,12 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog
 import { ConfirmDialogComponent } from '../../../../shared/confirm-dialog/confirm-dialog.component'; // Importa el componente del diálogo
 import { MatDialogModule } from '@angular/material/dialog'; // Importa MatDialogModule
+
+interface Token {
+  concepto: string;
+  precio: number;
+  token: string;
+}
 
 @Component({
   selector: 'app-datos-servicio-p2',
@@ -27,8 +33,13 @@ import { MatDialogModule } from '@angular/material/dialog'; // Importa MatDialog
   styleUrls: ['./datos-servicio-p2.component.scss']
 })
 export class DatosServicioP2Component {
+  @Output() tokenAdded = new EventEmitter<any>(); // Emite el token al padre
+
   form: FormGroup;
-  tokens: string[] = []; // Lista de tokens
+  tokens = [
+    { concepto: 'Concepto 1 Concepto 1Concepto 1Concepto 1Concepto 1Concepto 1Concepto 1Concepto 1Concepto 1Concepto 1', precio: 100, token: 'ABC123' },
+    { concepto: 'Concepto 2', precio: 200, token: 'DEF456' }
+  ]; // Lista de tokens
 
   constructor(private fb: FormBuilder, private dialog: MatDialog) {
     this.form = this.fb.group({
@@ -41,26 +52,21 @@ export class DatosServicioP2Component {
     });
   }
 
-  onAddToken() {
-    if (this.form.valid) {
-      const token = this.form.get('tokenBoleto')?.value;
-      this.tokens.push(token); // Agrega el token a la lista
-      this.form.get('tokenBoleto')?.reset(); // Limpia el campo
-    } else {
-      this.form.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores
+  onAddToken(): void {
+    const newToken: Token = {
+      concepto: this.form.get('concepto')?.value || 'Nuevo Concepto',
+      precio: this.form.get('precio')?.value || 0,
+      token: this.form.get('tokenBoleto')?.value
+    };
+
+    if (newToken.token) {
+      this.tokens.push(newToken);
+      this.tokenAdded.emit(newToken); // Emite el token al componente padre
+      this.form.get('tokenBoleto')?.reset(); // Limpia el campo del token
     }
   }
 
-  removeToken(token: string) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '300px',
-      data: { message: `¿Está seguro de que desea eliminar el token "${token}"?` }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.tokens = this.tokens.filter(t => t !== token); // Elimina el token si el usuario confirma
-      }
-    });
+  removeToken(token: any): void {
+    this.tokens = this.tokens.filter(t => t !== token);
   }
 }
