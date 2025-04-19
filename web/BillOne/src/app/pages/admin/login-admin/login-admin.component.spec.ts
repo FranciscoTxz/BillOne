@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GfaComponent } from './gfa.component';
+import { LoginAdminComponent } from './login-admin.component';
 
-describe('GfaComponent', () => {
-  let component: GfaComponent;
-  let fixture: ComponentFixture<GfaComponent>;
+describe('LoginAdminComponent', () => {
+  let component: LoginAdminComponent;
+  let fixture: ComponentFixture<LoginAdminComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GfaComponent]
+      imports: [LoginAdminComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(GfaComponent);
+    fixture = TestBed.createComponent(LoginAdminComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
