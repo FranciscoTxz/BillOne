@@ -1,0 +1,65 @@
+<div class="conten content-process">
+  <form [formGroup]="form" class="selector" (ngSubmit)="onSubmit()">
+    <h2>Recuperacion de CFDI</h2>
+    <p>Ingrese los datos requeridos</p>
+
+    <div class="form-container">
+      <!-- Sección izquierda: Formulario principal -->
+      <div class="form-left">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>SELECCIONE UNA EMPRESA</mat-label>
+          <mat-select formControlName="tipoServicio" (selectionChange)="onEmpresaChange($event.value)">
+            <mat-option value="ttur">TTUR</mat-option>
+            <mat-option value="envios-primera-plus">ENVIOS PRIMERA PLUS</mat-option>
+            <mat-option value="paqueteria-mensajeria-flecha-amarilla">PAQUETERIA Y MENSAJERIA FLECHA AMARILLA</mat-option>
+            <mat-option value="boletos-autobus">BOLETOS DE AUTOBUS</mat-option>
+            <mat-option value="consumo-alimentos">CONSUMO DE ALIMENTOS</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Botón de búsqueda -->
+        <div class="button-container-left" *ngIf="mostrarBotonBuscar">
+          <button mat-raised-button color="primary" [disabled]="!form.valid">
+            <mat-icon>search</mat-icon> Buscar Factura
+          </button>
+        </div>
+      </div>
+
+      <!-- Sección derecha: Entradas de texto adicionales -->
+      <div class="form-right" *ngIf="mostrarOpcionesAdicionales">
+        <!-- Campo adicional 1 -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ labelOpcionAdicional }}</mat-label>
+          <input matInput formControlName="opcionAdicional" />
+          <mat-error *ngIf="form.get('opcionAdicional')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Campo adicional 2 -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>{{ labelDetalle }}</mat-label>
+          <input matInput formControlName="detalle" />
+          <mat-error *ngIf="form.get('detalle')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="form.get('detalle')?.hasError('invalidRFC')">
+            El RFC no tiene un formato válido.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Campo adicional 3 (opcional) -->
+        <mat-form-field *ngIf="mostrarTercerSelect" appearance="outline" class="full-width">
+          <mat-label>{{ labelTercerDetalle }}</mat-label>
+          <input matInput formControlName="tercerDetalle" />
+          <mat-error *ngIf="form.get('tercerDetalle')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="form.get('tercerDetalle')?.hasError('invalidRFC')">
+            El RFC no tiene un formato válido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
