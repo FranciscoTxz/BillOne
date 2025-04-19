@@ -20,8 +20,15 @@ public class FileController : ControllerBase
     [HttpPost("send")]
     public async Task<IActionResult> SendEmail([FromBody] EmailRequest request)
     {
-        await _emailService.SendEmailAsync(request);
-        return Ok("Correo enviado correctamente.");
+        try
+        {
+            await _emailService.SendEmailAsync(request);
+            return Ok("Correo enviado correctamente.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error al enviar el correo: {ex.Message}");
+        }
     }
 }
 /*
