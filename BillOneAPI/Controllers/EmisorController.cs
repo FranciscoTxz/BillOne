@@ -20,14 +20,36 @@ public class EmisorController : ControllerBase
     public async Task<IActionResult> ConfigurarEmisor([FromBody] Emisor emisor)
     {
         // Eliminar cualquier emisor existente (solo permitimos uno)
-        var emisorExistente = await _context.Emisores.FirstOrDefaultAsync();
+        /* var emisorExistente = await _context.Emisores.FirstOrDefaultAsync();
         if (emisorExistente != null)
         {
             _context.Emisores.Remove(emisorExistente);
-        }
+        } */
 
-        _context.Emisores.Add(emisor);
-        await _context.SaveChangesAsync();
+        try
+        {
+            _context.Emisores.Add(emisor);
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException ex)
+        {
+            return BadRequest($"Error al guardar el emisor: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error inesperado: {ex.Message}");
+        }
+        return Ok(emisor);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> ObtenerEmisor(int id)
+    {
+        var emisor = await _context.Emisores.FindAsync(id);
+        if (emisor == null)
+        {
+            return NotFound();
+        }
 
         return Ok(emisor);
     }
@@ -35,12 +57,12 @@ public class EmisorController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ObtenerDatosEmisor()
     {
-        var emisor = await _context.Emisores.FirstOrDefaultAsync();
-        if (emisor == null)
+        var emisores = await _context.Emisores.ToListAsync();
+        if (emisores == null || !emisores.Any())
         {
             return NotFound();
         }
 
-        return Ok(emisor);
+        return Ok(emisores);
     }
 }
