@@ -11,7 +11,25 @@ public class BillOneContext : DbContext
     public DbSet<Factura> Facturas { get; set; } = null!;
     public DbSet<HistorialFactura> HistorialFacturas { get; set; } = null!;
     public DbSet<TokenE> Tokens { get; set; } = null!;
-
     public DbSet<Emisor> Emisores { get; set; } = null!;
+    public DbSet<Admin> Admins { get; set; } = null!;
+    public DbSet<AdminEmisor> AdminEmisores { get; set; } = null!;
+     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Configurar la tabla intermedia
+        modelBuilder.Entity<AdminEmisor>()
+            .HasKey(ae => new { ae.AdminCorreo, ae.EmisorId });
 
+        modelBuilder.Entity<AdminEmisor>()
+            .HasOne(ae => ae.Admin)
+            .WithMany(a => a.AdminEmisores)
+            .HasForeignKey(ae => ae.AdminCorreo);
+
+        modelBuilder.Entity<AdminEmisor>()
+            .HasOne(ae => ae.Emisor)
+            .WithMany(e => e.AdminEmisores)
+            .HasForeignKey(ae => ae.EmisorId);
+
+        base.OnModelCreating(modelBuilder);
+    }
 }

@@ -15,4 +15,5 @@ public class Emisor
     public string Estado { get; set; } = string.Empty;
     public string Telefono { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
+    public ICollection<AdminEmisor> AdminEmisores { get; set; } = new List<AdminEmisor>();
 }
