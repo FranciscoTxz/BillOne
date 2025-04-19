@@ -1,0 +1,41 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches: [ "master" ]
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./BillOneAPI/BillOneAPI.csproj
+
+      - name: Build
+        run: dotnet build ./BillOneAPI/BillOneAPI.csproj --configuration Release
+
+      - name: Publish
+        run: dotnet publish ./BillOneAPI/BillOneAPI.csproj -c Release -o ./publish
+
+      - name: Zip published output
+        run: zip -r app.zip ./publish
+
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ secrets.APP_NAME }}
+          environment_name: ${{ secrets.ENV_NAME }}
+          version_label: v-${{ github.run_number }}
+          region: ${{ secrets.AWS_REGION }}
+          deployment_package: app.zip
