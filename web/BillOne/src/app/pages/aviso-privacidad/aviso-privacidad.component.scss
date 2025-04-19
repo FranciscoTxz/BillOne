@@ -1,5 +1,5 @@
 .privacy-card {
-  max-width: 800px;
+  max-width: 95vw; // Increased from 800px to 95% of viewport width
   margin: 40px auto;
   padding: 20px;
   background: #fff;
@@ -17,14 +17,44 @@
   }
 
   .video-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; // Maintains 16:9 aspect ratio
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+    
     iframe {
-      max-width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border-radius: 8px;
       border: none;
+    }
+  }
+}
+
+// Media queries for different screen sizes
+@media (min-width: 1200px) {
+  .privacy-card {
+    max-width: 80vw; // Even larger on big screens
+    
+    .video-container {
+      width: 90%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .privacy-card {
+    padding: 15px;
+    margin: 20px auto;
+    
+    h1 {
+      font-size: 22px;
     }
   }
 }
