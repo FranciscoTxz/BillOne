@@ -4,6 +4,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common'; // Importa CommonModule para *ngIf y *ngFor
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-datos-servicio',
@@ -13,7 +15,9 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule para *ng
     ReactiveFormsModule, // Para formularios reactivos
     MatButtonModule, // Para botones de Angular Material
     MatIconModule, // Para íconos de Angular Material
-    MatSlideToggleModule // Para el toggle de Angular Material
+    MatSlideToggleModule, // Para el toggle de Angular Material
+    MatFormFieldModule, // Para el campo de formulario de Angular Material
+    MatSelectModule // Para el select de Angular Material
   ],
   templateUrl: './datos-servicio.component.html',
   styleUrls: ['./datos-servicio.component.scss']

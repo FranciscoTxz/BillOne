@@ -18,6 +18,16 @@ nav {
     }
   }
 
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); // Fondo oscuro semitransparente
+    z-index: 999; // Debe estar detrás del menú
+  }
+
   .hamburger {
     display: none;
     margin-left: 40px;
@@ -59,7 +69,7 @@ nav {
 
         }
         &:hover {
-          background-color: #be79026e;
+          background-color: #176abde0;
         }
       }
   }
@@ -78,18 +88,20 @@ nav {
       top: 0;
       left: -100%;
       flex-direction: column;
-      background-color: #ffa000;
+      background-color: #1976d2;
       width: 250px;
       height: 100%;
       padding-top: 70px;
       transition: left 0.3s;
-
+      
       &.active {
         left: 0;
       }
 
       li {
-        padding: 15px 0;
+        padding: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
         text-align: center;
       }
     }

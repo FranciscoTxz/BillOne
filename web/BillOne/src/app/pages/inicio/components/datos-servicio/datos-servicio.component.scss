@@ -12,6 +12,60 @@
     padding: 20px 0px 0px 30px;
   }
 
+  .full-width {
+    width: 90%; // Asegura que el mat-form-field ocupe todo el ancho disponible
+  }
+
+  mat-form-field {
+    width: 90%; // Ajusta el ancho del campo
+    margin: 0 auto 20px auto; // Solo margen inferior
+    border: none; // Elimina bordes adicionales
+
+    mat-label {
+      font-size: 1rem;
+      color: #555;
+      text-transform: uppercase; // Convierte el texto a mayúsculas
+    }
+
+    mat-select {
+      font-size: 1rem;
+      color: #333;
+      text-transform: uppercase; // Convierte el texto a mayúsculas
+      background: transparent; // Fondo transparente
+      box-shadow: none; // Elimina sombras
+    }
+
+    mat-option {
+      font-size: 1rem;
+      line-height: 2rem;
+      color: #333;
+      text-transform: uppercase; // Convierte el texto a mayúsculas
+    }
+
+    .mat-mdc-form-field-outline {
+      display: none; // Elimina el contorno del campo
+    }
+
+    .mat-mdc-form-field-outline-start,
+    .mat-mdc-form-field-outline-end {
+      border: none !important; // Elimina bordes adicionales
+    }
+
+    .mat-mdc-form-field-outline-gap {
+      display: none; // Elimina el espacio del borde
+    }
+
+    .mat-mdc-form-field-flex {
+      border: none; // Elimina todos los bordes
+      border-bottom: 1px solid #000; // Solo borde inferior
+      transition: border-color 0.2s;
+
+      &:focus-within {
+        border-color: #555; // Cambia el color del borde inferior al enfocar
+      }
+    }
+  }
+
   label {
     display: flex;
     flex-direction: column;
