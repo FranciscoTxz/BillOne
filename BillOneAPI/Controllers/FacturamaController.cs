@@ -52,7 +52,7 @@ public class FacturamaController : ControllerBase
             );
 
             // Log para depuración
-            Console.WriteLine($"URL: {_apiUrl}api-lite/2/cfdis");
+            Console.WriteLine($"URL: {_apiUrl}api-lite/3/cfdis");
             Console.WriteLine($"Request: {jsonContent}");
 
             // Imprimir cabeceras para depuración
@@ -62,7 +62,7 @@ public class FacturamaController : ControllerBase
             }
 
             // Endpoint para timbrar CFDI - Usando el API Multiemisor
-            var response = await _httpClient.PostAsync($"{_apiUrl}api-lite/2/cfdis", content);
+            var response = await _httpClient.PostAsync($"{_apiUrl}api-lite/3/cfdis", content);
 
             // Obtener el contenido de la respuesta como string
             var responseContent = await response.Content.ReadAsStringAsync();
@@ -130,41 +130,7 @@ public class FacturamaController : ControllerBase
         }
     }
 
-    [HttpGet("descargar/{id}/{formato}")]
-    public async Task<IActionResult> DescargarArchivo(string id, string formato)
-    {
-        try
-        {
-            // Formatos disponibles: pdf, xml, html
-            if (!new[] { "pdf", "xml", "html" }.Contains(formato.ToLower()))
-            {
-                return BadRequest("Formato no válido. Opciones disponibles: pdf, xml, html");
-            }
-
-            // Endpoint para descargar archivos - API Multiemisor
-            var response = await _httpClient.GetAsync($"{_apiUrl}api-lite/cfdis/{id}/{formato}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var contentType = formato.ToLower() switch
-                {
-                    "pdf" => "application/pdf",
-                    "xml" => "application/xml",
-                    "html" => "text/html",
-                    _ => "application/octet-stream"
-                };
-
-                var fileBytes = await response.Content.ReadAsByteArrayAsync();
-                return File(fileBytes, contentType, $"factura.{formato.ToLower()}");
-            }
-
-            return StatusCode((int)response.StatusCode, await response.Content.ReadAsStringAsync());
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, $"Error al descargar archivo: {ex.Message}");
-        }
-    }
+    
 
     [HttpGet("listar")]
     public async Task<IActionResult> ListarFacturas([FromQuery] string? fechaInicio = null, [FromQuery] string? fechaFin = null)
