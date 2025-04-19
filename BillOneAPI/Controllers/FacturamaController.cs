@@ -9,8 +9,10 @@ public class FacturamaController : ControllerBase
 {
     private readonly HttpClient _httpClient;
     private readonly string _apiUrl;
+    private readonly IWebHostEnvironment _env;
+    private readonly string _filesDirectory;
 
-    public FacturamaController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public FacturamaController(IHttpClientFactory httpClientFactory, IConfiguration configuration, IWebHostEnvironment env)
     {
         // Usar IHttpClientFactory para crear un HttpClient
         _httpClient = httpClientFactory.CreateClient("Facturama");
@@ -18,7 +20,18 @@ public class FacturamaController : ControllerBase
         // Configuración para el ambiente de pruebas (sandbox)
         _apiUrl = "https://apisandbox.facturama.mx/";
 
-        // Si deseas usar las credenciales desde la configuración
+        _env = env;
+
+        // Configurar directorio de archivos
+        _filesDirectory = Path.Combine(_env.ContentRootPath, "files");
+        
+        // Crear directorio si no existe
+        if (!Directory.Exists(_filesDirectory))
+        {
+            Directory.CreateDirectory(_filesDirectory);
+        }
+
+        // las credenciales desde la configuración
         var username = configuration["Facturama:Username"];
         var password = configuration["Facturama:Password"];
 
@@ -28,7 +41,6 @@ public class FacturamaController : ControllerBase
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                 Convert.ToBase64String(authToken));
         }
-        // Si no, la autenticación vendrá en las cabeceras de la petición
     }
 
     [HttpPost("timbrar")]
@@ -130,7 +142,7 @@ public class FacturamaController : ControllerBase
         }
     }
 
-    
+
 
     [HttpGet("listar")]
     public async Task<IActionResult> ListarFacturas([FromQuery] string? fechaInicio = null, [FromQuery] string? fechaFin = null)
@@ -181,6 +193,84 @@ public class FacturamaController : ControllerBase
             return StatusCode(500, $"Error al obtener factura: {ex.Message}");
         }
     }
+
+    [HttpGet("descargar/{format}/{type}/{id}")]
+    public async Task<IActionResult> DescargarFactura(string format, string type, string id)
+    {
+        try
+        {
+            // Validación de parámetros
+            if (string.IsNullOrEmpty(format) || string.IsNullOrEmpty(type) || string.IsNullOrEmpty(id))
+                return BadRequest("Todos los parámetros (format, type, id) son requeridos");
+
+            // Validar formatos permitidos (case-insensitive)
+            var formatosPermitidos = new[] { "pdf", "html", "xml" };
+            if (!formatosPermitidos.Contains(format.ToLower()))
+                return BadRequest($"Formato '{format}' no válido. Use: {string.Join(", ", formatosPermitidos)}");
+
+            // Validar tipos permitidos (case-insensitive)
+            var tiposPermitidos = new[] { "payroll", "received", "issued", "issuedlite" };
+            var typeLower = type.ToLower();
+            if (!tiposPermitidos.Contains(typeLower))
+                return BadRequest($"Tipo '{type}' no válido. Use: payroll, received, issued, issuedLite");
+            
+            // Construir URL según documentación de Facturama
+            var url = $"{_apiUrl}api/cfdi/{format.ToLower()}/{typeLower}/{id}";
+            Console.WriteLine($"Solicitando documento desde: {url}");
+
+            // Realizar petición
+            var response = await _httpClient.GetAsync(url);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error en la respuesta: {response.StatusCode} - {responseContent}");
+                return StatusCode((int)response.StatusCode, JsonSerializer.Deserialize<object>(responseContent));
+            }
+
+            // Deserializar respuesta
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var fileResponse = JsonSerializer.Deserialize<FileResponse>(responseContent, options);
+
+            if (fileResponse == null || string.IsNullOrEmpty(fileResponse.Content))
+                return StatusCode(500, "La respuesta no contiene datos válidos");
+
+            // Decodificar base64
+            var fileBytes = Convert.FromBase64String(fileResponse.Content);
+
+            // Determinar content-type
+            var contentType = format.ToLower() switch
+            {
+                "pdf" => "application/pdf",
+                "html" => "text/html",
+                "xml" => "application/xml",
+                _ => "application/octet-stream"
+            };
+
+            // Devolver archivo
+            return File(fileBytes, contentType, $"{id}.{format.ToLower()}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al descargar factura: {ex.Message}\n{ex.StackTrace}");
+            return StatusCode(500, new
+            {
+                Error = "Error interno al procesar la solicitud",
+                ex.Message,
+                StackTrace = ex.StackTrace
+            });
+        }
+    }
+
+    // Clases para deserialización
+    public class FileResponse
+    {
+        public string ContentEncoding { get; set; }
+        public string ContentType { get; set; }
+        public int ContentLength { get; set; }
+        public string Content { get; set; }
+    }
+
 
     [HttpDelete("cancelar/{id}")]
     public async Task<IActionResult> CancelarFactura(string id, [FromBody] object motivo)
