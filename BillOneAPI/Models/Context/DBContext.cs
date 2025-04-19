@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using BillOneAPI.Models.Entities;
+using System.Text.Json;
 
 namespace BillOneAPI.Models.Context;
 public class BillOneContext : DbContext
@@ -29,6 +30,13 @@ public class BillOneContext : DbContext
             .HasOne(ae => ae.Emisor)
             .WithMany(e => e.AdminEmisores)
             .HasForeignKey(ae => ae.EmisorId);
+
+        modelBuilder.Entity<Admin>()
+        .Property(a => a.Metricas)
+        .HasConversion(
+            v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+            v => JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, int>>>(v, (JsonSerializerOptions)null)!
+        );
 
         base.OnModelCreating(modelBuilder);
     }

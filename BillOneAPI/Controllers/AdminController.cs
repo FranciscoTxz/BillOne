@@ -1,4 +1,3 @@
-using BillOneAPI.Metrics;
 using BillOneAPI.Models.Context;
 using BillOneAPI.Models.DTOs;
 using BillOneAPI.Models.Entities;
@@ -104,10 +103,20 @@ public class AdminController : ControllerBase
     }
 
     // Get : /api/v1/control
-    [HttpGet("metrics")]
-    public IActionResult GetMetrics()
+    [HttpGet("metrics/{correo}")]
+    public async Task<IActionResult> GetMetrics(string correo)
     {
-        var metrics = CustomMetrics.GetAllMetrics();
-        return Ok(metrics);
+        var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Correo == correo);
+        if (admin == null)
+        {
+            return NotFound("Admin no encontrado");
+        }
+
+        if (admin.Metricas == null || !admin.Metricas.Any())
+        {
+            return NotFound("No hay métricas disponibles");
+        }
+
+        return Ok(admin.Metricas);
     }
 }

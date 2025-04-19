@@ -87,7 +87,6 @@ public class DatosFiscalesController : ControllerBase
                 return NotFound();
             }
 
-            CustomMetrics.Increment("GetByRFC"); // Incrementar métrica
             return Ok(usuario);
         }
         catch (Exception ex)

@@ -1,24 +1,45 @@
 using System.Collections.Concurrent;
+using BillOneAPI.Models.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace BillOneAPI.Metrics;
 
-public static class CustomMetrics
+public class CustomMetrics
 {
-    private static readonly ConcurrentDictionary<string, int> _metrics = new();
+    private readonly BillOneContext _context;
 
-    public static void Increment(string metricName)
+    public CustomMetrics(BillOneContext context)
     {
-        _metrics.AddOrUpdate(metricName, 1, (_, current) => current + 1);
+        _context = context;
     }
 
-    public static Dictionary<string, int> GetAllMetrics()
+    public async Task<bool> ActualizarMetrciasAsync(string correoAdmin, int emisorId, string concepto)
     {
-        return _metrics.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-    }
+        var admin = await _context.Admins.FindAsync(correoAdmin);
 
-    public static void Reset()
-    {
-        _metrics.Clear();
+        if (admin == null)
+            return false;
+
+        var emisor = await _context.Emisores.FindAsync(emisorId);
+
+        if (emisor == null)
+            return false;
+
+        var adminEmisor = await _context.AdminEmisores.FirstOrDefaultAsync(ae => ae.AdminCorreo == correoAdmin && ae.EmisorId == emisorId);
+
+        if (adminEmisor == null)
+            return false;
+
+        if (!admin.Metricas.ContainsKey(emisor.Nombre))
+            admin.Metricas[emisor.Nombre] = new Dictionary<string, int>();
+
+        if (!admin.Metricas[emisor.Nombre].ContainsKey(concepto))
+            admin.Metricas[emisor.Nombre][concepto] = 0;
+
+        admin.Metricas[emisor.Nombre][concepto]++;
+
+        await _context.SaveChangesAsync();
+        return true;
     }
 }
 
