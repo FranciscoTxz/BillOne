@@ -11,3 +11,10 @@ Para inicializar la base de datos debes primero:
 5- Actualizar la base de datos, para esto debes tener una base de datos llamada BillOne en tu servidor MySQl: dotnet ef database update
 
 5.5- SI hay algun cambio en la base de datos puedes hacer otra migracion pero con otro nombre y actualizan la base de datos con el paso 4 y 5
+
+
+### Crear publish para AWS donde se sube la API
+Desde la Raiz corre esto: 
+    dotnet publish ./BillOneAPI/BillOneAPI.csproj -c Release -r linux-x64 --self-contained true -o publish
+    cd publish
+    zip -r ../app.zip .

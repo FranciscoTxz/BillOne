@@ -1,0 +1,32 @@
+<div class="chat-container">
+    <div class="chat-header">
+      <h3>Asistente de Facturación</h3>
+      <button mat-icon-button (click)="closeChat()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" class="message" [ngClass]="{'user-message': message.role === 'user', 'assistant-message': message.role === 'assistant'}">
+        <div class="message-content">
+          <p>{{ message.content }}</p>
+        </div>
+      </div>
+      <div *ngIf="isLoading" class="loading-indicator">
+        <mat-spinner diameter="30"></mat-spinner>
+      </div>
+    </div>
+    
+    <div class="chat-input">
+      <input 
+        type="text" 
+        [(ngModel)]="newMessage" 
+        placeholder="Escribe tu mensaje aquí..." 
+        (keyup.enter)="sendMessage()" 
+        [disabled]="isLoading"
+      >
+      <button mat-fab color="primary" (click)="sendMessage()" [disabled]="isLoading || !newMessage.trim()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
