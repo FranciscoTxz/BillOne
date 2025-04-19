@@ -17,13 +17,13 @@
       transform: translateX(-50%);
       width: 80px;
       height: 4px;
-      background: linear-gradient(90deg, #FFC107, #FFE082);
+      background: linear-gradient(90deg, #1976d2, #64b5f6); // Gradiente azul
       border-radius: 4px;
     }
 
     h1 {
       font-size: 36px;
-      color: #333;
+      color: #1976d2; // Azul principal
       text-transform: uppercase;
       letter-spacing: 1.5px;
       margin: 0;
@@ -32,7 +32,7 @@
 
     p {
       font-size: 18px;
-      color: #666;
+      color: #666; // Texto gris oscuro
       margin: 10px 0 0;
       font-weight: 400;
       letter-spacing: 0.5px;
@@ -55,7 +55,7 @@
       width: 320px;
       text-align: left;
       transition: all 0.3s ease;
-      border-top: 4px solid #FFC107;
+      border-top: 4px solid #1976d2; // Azul principal
       position: relative;
       overflow: hidden;
       
@@ -66,19 +66,19 @@
         right: 0;
         width: 100px;
         height: 100px;
-        background: linear-gradient(135deg, transparent 50%, rgba(255, 193, 7, 0.1) 50%);
+        background: linear-gradient(135deg, transparent 50%, rgba(25, 118, 210, 0.1) 50%); // Azul claro con transparencia
         border-radius: 0 0 0 100px;
       }
 
       &:hover {
         transform: translateY(-7px);
-        box-shadow: 0 15px 30px rgba(255, 193, 7, 0.15);
+        box-shadow: 0 15px 30px rgba(25, 118, 210, 0.15); // Azul principal con transparencia
       }
 
       h2 {
         font-size: 22px;
         margin-bottom: 20px;
-        color: #F57F17;
+        color: #1976d2; // Azul principal
         padding-bottom: 10px;
         position: relative;
         font-weight: 600;
@@ -90,7 +90,7 @@
           left: 0;
           width: 50px;
           height: 3px;
-          background: linear-gradient(90deg, #FFC107, #FFE082);
+          background: linear-gradient(90deg, #1976d2, #64b5f6); // Gradiente azul
           border-radius: 3px;
         }
       }
@@ -98,14 +98,14 @@
       p {
         margin: 12px 0;
         font-size: 15px;
-        color: #555;
+        color: #555; // Texto gris oscuro
         line-height: 1.5;
         display: flex;
         align-items: center;
         
         &:nth-of-type(odd) {
           font-weight: 600;
-          color: #333;
+          color: #333; // Texto más oscuro
           margin-top: 16px;
           margin-bottom: 4px;
         }
@@ -114,8 +114,8 @@
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          background: #FFF8E1;
-          color: #F57F17;
+          background: #e3f2fd; // Azul muy claro
+          color: #1976d2; // Azul principal
           width: 24px;
           height: 24px;
           border-radius: 50%;
@@ -125,12 +125,12 @@
       }
       
       a {
-        color: #F57F17;
+        color: #1976d2; // Azul principal
         text-decoration: none;
         transition: color 0.2s;
         
         &:hover {
-          color: #FF9800;
+          color: #1565c0; // Azul más oscuro
           text-decoration: underline;
         }
       }

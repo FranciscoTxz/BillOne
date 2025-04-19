@@ -9,6 +9,7 @@
   font-weight: bold;
   color: #1976d2; // Color principal de la app
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .dialog-content {
@@ -24,7 +25,7 @@
 
 .dialog-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 10px;
 
   .cancel-button {
@@ -38,13 +39,13 @@
   }
 
   .confirm-button {
-    background-color: #d9534f; // Color de advertencia
+    background-color: #1976d2; // Color de advertencia
     color: #fff;
     font-weight: bold;
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #c9302c; // Color más oscuro al pasar el mouse
+      background-color: #1565b4; // Color más oscuro al pasar el mouse
     }
   }
 }
